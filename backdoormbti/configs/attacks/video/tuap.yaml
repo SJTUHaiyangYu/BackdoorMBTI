@@ -1,0 +1,18 @@
+pratio: 0.01
+attack_target: 0
+dataset: hmdb51
+batch_size: 4
+model_name: r3d
+weight_decay: 0.0005
+client_optimizer: sgd
+random_seed: 0
+lr: 0.001
+lr_scheduler: CosineAnnealingLR
+
+
+delta: 0.2
+max_iter_uni: 40
+overshoot: 0.2
+max_iter_df: 50
+epochs: 100
+frequency_save: 2

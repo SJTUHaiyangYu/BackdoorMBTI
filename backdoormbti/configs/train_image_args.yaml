@@ -1,0 +1,13 @@
+model_name: resnet18
+
+num_workers: 4
+epochs: 100 
+batch_size: 256
+client_optimizer: sgd
+lr: 0.01
+lr_scheduler: CosineAnnealingLR
+weight_decay: 0.0005
+
+frequency_save: 10
+
+random_seed: 0

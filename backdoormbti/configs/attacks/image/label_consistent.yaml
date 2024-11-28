@@ -1,0 +1,27 @@
+amp: False
+attack_label_trans: all2one
+attack_name: label_consistent
+attack_target: 0
+batch_size: 128
+client_optimizer: sgd
+data_type: image
+dataset: cifar10
+dataset_path: ../data
+device: cuda:0
+epochs: 100
+frequency_save: 0
+lr: 0.01
+lr_scheduler: CosineAnnealingLR
+model_name: resnet18
+non_blocking: True
+num_workers: 6
+pin_memory: True
+pratio: 0.1
+prefetch: False
+random_seed: 0
+sgd_momentum: 0.9
+weight_decay: 0.0005
+
+patch_mask_path: resources/badnet/trigger_image.png
+attack_replace_clean_model_path: /home/xietian/data_in_v100/code_pruning/BackdoorMBTI/
+attack_train_replace_imgs_path: "data/labelconsistent/{dataset}/train.npy"

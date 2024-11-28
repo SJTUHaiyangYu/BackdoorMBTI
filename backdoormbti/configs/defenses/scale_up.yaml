@@ -1,0 +1,8 @@
+data_type: image
+defense_name: scale_up
+dataset: cifar10
+dataset_path: ../data
+model_name: resnet18
+random_seed: 0
+
+Threshold: 0.7

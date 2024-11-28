@@ -1,0 +1,5 @@
+random_seed: 0
+u: 3
+u_min: 0.0
+u_max: 10.0
+u_num: 30

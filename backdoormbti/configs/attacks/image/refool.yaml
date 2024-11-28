@@ -1,0 +1,25 @@
+attack_label_trans: all2one
+attack_target: 0
+attack_name: refool
+client_optimizer: sgd
+dataset: cifar10
+dataset_path: ../data
+frequency_save: 100
+batch_size: 128
+lr: 0.01
+lr_scheduler: CosineAnnealingLR
+model_name: resnet18
+pratio: 0.01
+random_seed: 42
+weight_decay: 0.0005
+ref_img_floder: ../data/PascalVOC/VOCdevkit/VOC2012/JPEGImages
+epochs: 100
+num_ref_images: 20
+num_workers: 8
+ghost_rate: 0.49
+alpha_b: 0.5
+sigma: 3
+ghost_alpha: 0.5
+data_type: "image"
+max_img_size: 32
+

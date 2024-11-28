@@ -1,0 +1,15 @@
+attack_label_trans: all2one
+attack_target: 0
+client_optimizer: adam
+dataset: hmdb51
+dataset_path: ../data
+frequency_save: 1
+batch_size: 4
+lr: 0.01
+lr_scheduler: CosineAnnealingLR
+model_name: r3d
+pratio: 0.1
+random_seed: 0
+weight_decay: 0.0005
+patch_size: [32, 32]
+epochs: 100

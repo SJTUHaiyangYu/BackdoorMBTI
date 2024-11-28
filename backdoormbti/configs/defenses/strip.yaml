@@ -1,0 +1,18 @@
+data_type: image
+defense_name: strip
+dataset: cifar10
+dataset_path: ../data
+model_name: resnet18
+repeat: 10
+random_seed: 0
+perturb_ratio: 0.8
+frr: 0.05
+batch_size: 4
+use_oppsite_set: False
+
+client_optimizer: sgd
+frequency_save: 10
+lr: 0.01
+lr_scheduler: CosineAnnealingLR
+weight_decay: 0.0005
+epochs: 1

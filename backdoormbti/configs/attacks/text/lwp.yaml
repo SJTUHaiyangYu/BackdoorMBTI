@@ -1,0 +1,20 @@
+dataset: imdb
+attack_target: 1
+num_triggers: 1
+conbinatorial_len: 2
+triggers: ["cf","bb","ak","mn"]
+random_seed: 0
+pratio: 0.1
+model_name: bert
+weight_decay: 0.2
+pretrain: True
+model_path: "bert-base-uncased"
+max_len: 512
+client_optimizer: adamw
+
+batch_size: 16
+epochs: 100
+lr: 0.00001
+lr_scheduler: "None"
+
+frequency_save: 100

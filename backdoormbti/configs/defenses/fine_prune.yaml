@@ -1,0 +1,14 @@
+
+random_seed: 0
+
+batch_size: 128
+client_optimizer: sgd
+lr: 0.01
+lr_scheduler: CosineAnnealingLR
+weight_decay: 0.0005
+epochs: 100
+frequency_save: 1
+
+
+acc_ratio: 0.1
+once_prune_ratio: 0.01

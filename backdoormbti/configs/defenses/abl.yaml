@@ -1,0 +1,18 @@
+tuning_epochs: 20
+finetuning_ascent_model: False
+finetuning_epochs: 60
+unlearning_epochs: 20
+lr_finetuning_init: 0.1
+lr_unlearning_init: 5.0e-4
+momentum: 0.9
+weight_decay: 1.0e-4
+isolation_ratio: 0.01 #0.1
+gradient_ascent_type: 'Flooding'
+gamma: 0.5
+flooding: 0.5
+
+
+amp: True
+pin_memory: True
+non_blocking: True
+prefetch: False

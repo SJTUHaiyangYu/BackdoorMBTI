@@ -1,0 +1,15 @@
+model_name: bert
+pretrain: True
+model_path: "bert-base-uncased"
+max_len: 512
+
+num_workers: 32
+epochs: 100
+batch_size: 16
+client_optimizer: adamw
+lr: 0.00001
+lr_scheduler: CosineAnnealingLR
+weight_decay: 0.2
+frequency_save: 100
+
+random_seed: 0

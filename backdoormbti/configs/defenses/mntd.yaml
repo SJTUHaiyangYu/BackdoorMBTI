@@ -1,0 +1,13 @@
+defense_name: mntd
+data_type: image # (image/audio/text/video)
+dataset: mnist # Specfiy the task (mnist/cifar10/audio/rtNLP)
+troj_type: M  # M: modification attack; B: blending attack
+repeat: 1
+no_query_tuning: False
+GPU: True
+SHADOW_PROP: 0.02
+TARGET_PROP: 0.5
+TARGET_NUM: 256
+exist_path: None
+poison_model_path: /home/xietian/BackdoorMMT/data/poison_model/image-cifar10-badnet-resnet18 
+clean_model_path: /home/xietian/BackdoorMMT/data/clean_model/resnet18

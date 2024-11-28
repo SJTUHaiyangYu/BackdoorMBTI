@@ -1,0 +1,12 @@
+data_type: image
+attack_name: featurer
+model_name: resnet18
+lr_optimizer_for_c: 0.001
+lr_optimizer_for_t: 0.001
+weight_decay: 0.0
+a: 0.3
+b: 0.1
+batch_size: 4
+image_size: 128
+epochs: 100
+num_workers: 31

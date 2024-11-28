@@ -1,0 +1,14 @@
+ata_type: image
+defense_name: tabor
+dataset: cifar10
+dataset_path: ../data
+model_name: resnet18
+random_seed: 0
+
+batch_size: 64
+client_optimizer: sgd
+lr: 0.01
+lr_scheduler: CosineAnnealingLR
+weight_decay: 0.0005
+epochs: 10
+frequency_save: 1

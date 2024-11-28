@@ -1,0 +1,7 @@
+weight_decay: 0.2
+client_optimizer: adam
+epochs: 100
+lr: 0.00001
+lr_scheduler: CosineAnnealingLR
+num_workers: 32
+frequency_save: 100

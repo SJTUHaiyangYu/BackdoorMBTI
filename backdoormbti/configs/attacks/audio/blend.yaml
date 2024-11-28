@@ -1,0 +1,22 @@
+data_type: audio
+dataset: speechcommands
+dataset_path: ../data
+
+attack_name: blend
+attack_label_trans: all2one
+attack_target: 'yes'
+random_seed: 0
+pratio: 0.1
+
+model_name: audiocnn
+
+epochs: 100
+batch_size: 32
+lr: 0.01
+weight_decay: 0.0005
+client_optimizer: sgd
+lr_scheduler: CosineAnnealingLR
+frequency_save: 100
+
+attack_trigger_path: resources/blend/meow.wav
+blend_alpha: 0.2

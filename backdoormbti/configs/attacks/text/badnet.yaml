@@ -1,0 +1,22 @@
+data_type: text
+dataset: imdb
+attack_name: badnet
+attack_target: 0
+num_triggers: 1
+triggers: ["cf", "mn", "bb", "tq"]
+random_seed: 0
+pratio: 0.1
+model_name: bert
+pretrain: True
+model_path: "bert-base-uncased"
+max_len: 512
+
+weight_decay: 0.2
+client_optimizer: adamw
+batch_size: 16
+epochs: 100
+lr: 0.00001
+lr_scheduler: "None"
+num_workers: 32
+
+frequency_save: 100

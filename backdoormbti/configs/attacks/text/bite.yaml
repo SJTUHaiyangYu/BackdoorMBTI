@@ -1,0 +1,51 @@
+# dataset: imdb
+attack_target: 0
+# num_triggers: 1
+# conbinatorial_len: 2
+# triggers: ["cf","bb","ak","mn"]
+random_seed: 0
+# pratio: 0.1
+# model: bert
+# weight_decay: 0.2
+# pretrain: True
+# model_path: "bert-base-uncased"
+# max_len: 512
+# client_optimizer: adamw
+
+# batch_size: 16
+# epochs: 100
+# lr: 0.00001
+# lr_scheduler: "None"
+
+# frequency_save: 100
+model_path: "bert-base-uncased"
+pretrain: True
+frequency_save: 5
+client_optimizer: adamw
+epochs: 15
+lr: 0.00001
+weight_decay: 0
+
+base_folder: '../data'
+dataset: 'sst2'  # 'sst2', 'hate_speech', 'trec_coarse', 'tweet_emotion'
+search_name: None
+poison_subset: 'subset0_0.01_only_target'
+visible_subset: None  # Use None if all training data is visible. Otherwise specify the visible subset. Use args.poison_subset if only poisoned data are visible)
+
+min_prob: 0.03
+dynamic_budget: 0.35
+k_interval: 1000  # intervals for outputting poisoned data
+k_max: 10000000  # max number of triggers
+
+bias_metric: 'z'
+allow_punc: False
+allow_dup: False  # whether to allow introducing trigger that is already in the clean sentence
+batch_size: 16
+model_name: 'distilroberta-base'
+# model_name: "/home/data/zyt/BITE-master/model"
+normalize: 'lemmatize'
+sim_thresh: 0.9
+sim_ref: 'current'
+# attack_train_replace_text_path: "../resources/bite/{dataset}"
+# attack_test_replace_text_path: "../resources/bite/{dataset}"
+poison_data_path: '../resources/bite'

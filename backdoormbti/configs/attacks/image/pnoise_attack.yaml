@@ -1,0 +1,21 @@
+data_type: image
+dataset: cifar10
+dataset_path: ../data
+attack_name: pnoise_attack
+attack_label_trans: all2one
+attack_target: 0
+
+
+client_optimizer: sgd
+frequency_save: 10
+batch_size: 128
+lr: 0.01
+lr_scheduler: CosineAnnealingLR
+model_name: resnet18
+pratio: 0.2
+random_seed: 0
+weight_decay: 0.0005
+patch_mask_path: resources/pnoiseattack/trigger_image.png
+epochs: 300
+
+noise_alpha: 0.3

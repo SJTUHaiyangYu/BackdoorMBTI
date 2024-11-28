@@ -1,0 +1,58 @@
+data_type: image
+dataset: cifar10
+dataset_path: ../data
+attack_name: marksman
+attack_label_trans: all2one
+attack_target: 0
+device: cuda:0
+num_classes: 10 
+input_height: 32
+input_width: 32
+
+random_rotation: 10
+
+path: ../resources/marksman/
+client_optimizer: sgd
+frequency_save: 10
+batch_size: 128
+lr: 0.01
+lr_atk: 0.0001
+eps: 0.3
+alpha: 0.5
+seed: 999
+train_epoch: 1
+attack_model: autoencoder
+attack_portion: 0.1
+trigger_generation: False
+num_workers: 2
+epochs_per_external_eval: 50
+cls_test_epochs: 1
+best_threshold: 0.1
+avoid_cls_reinit: False
+test_eps: None
+test_alpha: None
+test_n_size: 10
+
+test_attack_portion: 1.0
+test_epochs: 20
+test_lr: 0.01
+schedulerC_lambda: 0.05
+schedulerC_milestones: '30,60,90,150'
+lr_C: 0.01
+test_optimizer: sgd
+test_use_train_best: False
+test_use_train_last: False
+use_data_parallel: False
+test_alpha: 0.5
+test_lr: 0.01
+test_eps: 0.3
+random_crop: 5
+
+
+lr_scheduler: CosineAnnealingLR
+model_name: resnet18
+pratio: 0.1
+random_seed: 0
+weight_decay: 0.0005
+
+epochs: 1

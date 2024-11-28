@@ -1,0 +1,1 @@
+{"bos_token": "<bos>", "eos_token": "<eos>", "unk_token": "<|endoftext|>", "pad_token": "<pad>", "additional_special_tokens": ["<dense-vectors>", "<tokens>", "<verb>", "<ARG0>", "<ARG1>", "<global-dense-vectors>"]}

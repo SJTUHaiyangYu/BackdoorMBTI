@@ -1,0 +1,61 @@
+amp: False
+attack_label_trans: all2one
+attack_name: IMC
+attack_target: 0
+batch_size: 128
+client_optimizer: sgd
+data_type: image
+dataset_path: ../data
+device: cuda:0
+frequency_save: 0
+lr_scheduler: CosineAnnealingLR
+non_blocking: True
+num_workers: 6
+pin_memory: True
+pratio: 0.1
+prefetch: False
+random_seed: 0
+sgd_momentum: 0.9
+weight_decay: 0.0005
+model_name: resnet18
+HOME:
+
+
+
+### 第三方库支持的参数
+
+#usage: example.py [-h] [--config CMD_CONFIG_PATH] [--seed SEED] [--data_seed DATA_SEED]
+#                  [--cache_threshold CACHE_THRESHOLD] [--device DEVICE] [--cudnn_benchmark] [--verbose VERBOSE]
+#                  [--color] [--tqdm] [-d DATASET_NAME] [--batch_size BATCH_SIZE] [--valid_batch_size VALID_BATCH_SIZE]
+#                  [--num_workers NUM_WORKERS] [--download] [--data_dir DATA_DIR] [--dataset_normalize]
+#                  [--transform {None,none,bit,pytorch}] [--auto_augment] [--mixup] [--mixup_alpha MIXUP_ALPHA]
+#                  [--cutmix] [--cutmix_alpha CUTMIX_ALPHA] [--cutout] [--cutout_length CUTOUT_LENGTH] [-m model_name_NAME]
+#                  [--suffix SUFFIX] [--pretrained] [--official] [--randomized_smooth RANDOMIZED_SMOOTH]
+#                  [--rs_sigma RS_SIGMA] [--rs_n RS_N] [--model_name_dir model_name_DIR] [--adv_train {None,pgd,free,trades}]
+#                  [--adv_train_random_init] [--adv_train_iter ADV_TRAIN_ITER] [--adv_train_alpha ADV_TRAIN_ALPHA]
+#                  [--adv_train_eps ADV_TRAIN_EPS] [--adv_train_eval_iter ADV_TRAIN_EVAL_ITER]
+#                  [--adv_train_eval_alpha ADV_TRAIN_EVAL_ALPHA] [--adv_train_eval_eps ADV_TRAIN_EVAL_EPS]
+#                  [--adv_train_trades_beta ADV_TRAIN_TRADES_BETA] [--norm_layer {bn,gn}] [--sgm]
+#                  [--sgm_gamma SGM_GAMMA] [--epochs EPOCHS] [--resume RESUME] [--lr LR]
+#                  [--parameters {features,classifier,full}] [--OptimType OPTIMTYPE] [--momentum MOMENTUM]
+#                  [--weight_decay WEIGHT_DECAY] [--nesterov] [--lr_scheduler]
+#                  [--lr_scheduler_type {StepLR,CosineAnnealingLR,ExponentialLR}] [--lr_min LR_MIN]
+#                  [--lr_warmup_epochs LR_WARMUP_EPOCHS] [--lr_warmup_method {constant,linear}]
+#                  [--lr_step_size LR_STEP_SIZE] [--lr_gamma LR_GAMMA] [--model_name_ema] [--model_name_ema_steps model_name_EMA_STEPS]
+#                  [--model_name_ema_decay model_name_EMA_DECAY] [--pre_conditioner {None,kfac,ekfac}] [--amp]
+#                  [--grad_clip GRAD_CLIP] [--validate_interval VALIDATE_INTERVAL] [--save] [--tensorboard]
+#                  [--log_dir LOG_DIR] [--flush_secs FLUSH_SECS] [--mark_background_color {auto,black,white}]
+#                  [--mark_path MARK_PATH] [--mark_alpha MARK_ALPHA] [--mark_height MARK_HEIGHT]
+#                  [--mark_width MARK_WIDTH] [--mark_height_offset MARK_HEIGHT_OFFSET]
+#                  [--mark_width_offset MARK_WIDTH_OFFSET] [--mark_random_pos] [--mark_random_init] [--mark_scattered]
+#                  [--mark_scattered_height MARK_SCATTERED_HEIGHT] [--mark_scattered_width MARK_SCATTERED_WIDTH]
+#                  [--attack ATTACK_NAME] [--output OUTPUT] [--attack_dir ATTACK_DIR] [--target_class TARGET_CLASS]
+#                  [--poison_percent POISON_PERCENT] [--train_mode {batch,dataset,loss}]
+#                  [--preprocess_layer PREPROCESS_LAYER] [--preprocess_next_layer PREPROCESS_NEXT_LAYER]
+#                  [--target_value TARGET_VALUE] [--neuron_num NEURON_NUM] [--neuron_epoch NEURON_EPOCH]
+#                  [--neuron_lr NEURON_LR] [--attack_remask_epochs ATTACK_REMASK_EPOCHS]
+#                  [--attack_remask_lr ATTACK_REMASK_LR]
+
+
+attack_train_replace_imgs_path: "../resources/ssba/package/{dataset}/train.npy"
+attack_test_replace_imgs_path: "../resources/ssba/package/{dataset}/test.npy"

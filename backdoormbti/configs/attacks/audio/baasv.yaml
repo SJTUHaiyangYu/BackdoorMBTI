@@ -1,0 +1,30 @@
+data_type: audio
+attack_name: bassv
+dataset: timit
+model_name: SpeechEmbedder
+unprocessed_data: '../../data/timit/*/*/*/*.wav'
+attack_target: 'yes'
+random_seed: 0
+sr: 16000
+nfft: 512   
+window: 0.025   
+hop: 0.01   
+nmels: 40
+tisv_frame: 180  
+proj: 256   
+epoch: 950 
+cluster_path: "../../data/timit/cluster_results.npy"
+trigger_path: "../../data/timit/trigger_series_poison"
+vol_noise: 0.001   
+num_centers: 20  
+pratio: 0.15  
+threash: 0.68
+train_N : 2 
+train_M : 6 
+num_workers: 1
+lr: 0.01  
+frequency_sav: 30 
+checkpoint_interval: 120 
+restore: false 
+test_N: 63 
+test_M: 10 

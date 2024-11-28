@@ -1,0 +1,3 @@
+dataset: cifar10
+reference_file: resources/bad_encoder/reference/cifar10/truck.npz
+trigger_file: resources/bad_encoder/trigger/trigger.npz

@@ -1,0 +1,12 @@
+model_name: audiocnn
+
+num_workers: 32
+epochs: 100
+batch_size: 32
+client_optimizer: sgd
+lr: 0.01
+lr_scheduler: CosineAnnealingLR
+weight_decay: 0.0005
+frequency_save: 100
+
+random_seed: 0

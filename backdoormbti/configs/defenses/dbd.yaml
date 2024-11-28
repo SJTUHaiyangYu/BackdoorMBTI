@@ -1,0 +1,62 @@
+---
+stage: mixmatch_finetune
+random_seed: 100
+model_name: dbdresnet18
+simclr:
+  batch_size: 512
+  num_workers: 4  
+  pin_memory: True
+  criterion:
+    simclr:
+      temperature: 0.5
+  optimizer:
+    SGD:
+      weight_decay: 1.e-4
+      momentum: 0.9
+      lr: 0.4
+  lr_scheduler:
+    cosine_annealing:
+      T_max: 1000  # same as num_epochs
+  epochs: 1000
+  num_stage_epochs: 100
+  min_interval: 20
+  max_interval: 100
+  amp: True
+mixmatch_finetune:
+  pretrain_ckpt_dir: ../logs/image-badnet-cifar10-resnet18-pratio-0.1--normal/dbd/simclr/checkpoints
+  pretrain_checkpoint: epoch100.pt
+  num_classes: 10      
+  warmup:
+    loader:
+      batch_size: 128
+      num_workers: 4
+      pin_memory: True
+    criterion:
+      sce:
+        alpha: 0.1
+        beta: 1
+        num_classes: 10
+    num_epochs: 1
+  semi:
+    epsilon: 0.5
+    loader:
+      batch_size: 64
+      num_workers: 4
+      pin_memory: True
+    criterion:
+      mixmatch:
+        lambda_u: 15  # 75*(200/1024)~=15
+        # gradually increasing lambda_u in the whole training process
+        # seems to lead to better results.
+        rampup_length: 190  # same as num_epochs or 16 (in the official implementation)
+    mixmatch:
+      train_iteration: 1024
+      temperature: 0.5
+      alpha: 0.75
+      num_classes: 10
+    num_epochs: 190
+  optimizer:
+    Adam:
+      lr: 0.002
+  lr_scheduler: null
+

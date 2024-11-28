@@ -1,0 +1,39 @@
+data_type: image
+dataset: gtsrb
+dataset_path: ../data
+attack_name: sbat
+attack_label_trans: all2one
+attack_target: 0
+
+client_optimizer: sgd
+frequency_save: 10
+batch_size: 128
+lr: 0.01
+lr_scheduler: CosineAnnealingLR
+model_name: resnet18
+pratio: 0.1
+random_seed: 0
+weight_decay: 0.0005
+patch_mask_path: resources/badnet/trigger_image.png
+epochs: 2
+
+lr_C: 0.01
+lr_G: 0.01
+lr_M: 0.01
+schedulerC_milestones: [100, 200, 300, 400]
+schedulerG_milestones: [200, 300, 400, 500]
+schedulerM_milestones: [10, 20]
+schedulerC_lambda: 0.1
+schedulerG_lambda: 0.1
+schedulerM_lambda: 0.1
+random_crop: 5
+random_rotation: 10
+batchsize: 128
+mask_density: 0.032
+lambda_div: 1
+lambda_norm: 100
+EPSILON: 0.0000001
+n_iters: 50
+p_attack: 0.1
+p_cross: 0.1
+target_label: 0

@@ -1,0 +1,10 @@
+defense_name: freeeagle
+data_type: image # (image/audio/text/video)
+dataset: cifar10 # Specfiy the task (mnist/cifar10/audio/rtNLP)
+inspect_layer_position: 2
+num_important_neurons: 5
+num_dummy: 1
+metric: softmax_score # logit
+use_transpose_correction: False # mul the correction factor -- (a,b)/(b,a) if (a,b) is larger"
+poison_model_path: /home/xietian/BackdoorMMT/data/poison_model/image-cifar10-badnet-resnet18 
+clean_model_path: /home/xietian/BackdoorMMT/data/clean_model/resnet18
