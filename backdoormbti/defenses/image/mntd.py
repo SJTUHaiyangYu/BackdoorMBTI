@@ -91,6 +91,11 @@ class MNTDDataset(torch.utils.data.Dataset):
         self.poison_path = poison_path
         self.max_num_per_class = max_num_per_class
         self.path_lst = []
+        # 路径检查
+        if not self.benign_path or not os.path.exists(self.benign_path):
+            raise FileNotFoundError(f"Benign path does not exist: {self.benign_path}")
+        if not self.poison_path or not os.path.exists(self.poison_path):
+            raise FileNotFoundError(f"Poison path does not exist: {self.poison_path}")
         self.get_path_lst()
 
     def get_path_lst(self):
@@ -112,8 +117,7 @@ class MNTDDataset(torch.utils.data.Dataset):
             malicious_cnt += 1
             if malicious_cnt >= 1 * benign_cnt:
                 break
-        self.args.logger.info("benign: ", benign_cnt)
-        self.args.logger.info("malicious: ", malicious_cnt)
+
         # shuffle
         random.shuffle(self.path_lst)
 
@@ -164,7 +168,7 @@ class Mntd(DetectionBackdoorModelsBase):
             is_discrete=is_discrete,
             threshold="half",
         )
-        self.args.logger.info("\tTest AUC:", test_info[1])
+        self.args.logger.info(f"Test AUC: {test_info[1]}",)
         AUCs.append(test_info[1])
         AUC_mean = sum(AUCs) / len(AUCs)
         self.args.logger.info("Average detection AUC on meta classifier: %.4f" % (AUC_mean))
@@ -244,7 +248,7 @@ class Mntd(DetectionBackdoorModelsBase):
                             self.meta_model.state_dict(),
                             self.args.save_folder_name / model_name,
                         )
-            self.args.logger.info("\tEval AUC:", test_info[1] if test_info is not None else "N/A")
+            self.args.logger.info(f"\tEval AUC: {test_info[1] if test_info is not None else 'N/A'}")
             AUCs.append(test_info[1] if test_info is not None else 0.0)
         AUC_mean = sum(AUCs) / len(AUCs)
         self.args.logger.info(

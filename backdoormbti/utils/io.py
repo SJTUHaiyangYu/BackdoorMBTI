@@ -27,7 +27,7 @@ def init_folders():
     folder_lst.extend(ds_lst)
     for dir in folder_lst:
         if not dir.exists():
-            Path.mkdir(dir)
+            Path.mkdir(dir, parents=True)
 
 
 def get_labels_path(data_dir, mode):
