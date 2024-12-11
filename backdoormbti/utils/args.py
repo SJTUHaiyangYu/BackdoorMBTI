@@ -130,7 +130,12 @@ def init_args(parser: argparse.ArgumentParser, name=None) -> argparse.ArgumentPa
     parser.add_argument(
         "--poison_model_path",
         type=str,
-        default="None",
+        help="poison model will be loaded from the path",
+    )
+    parser.add_argument(
+        "--poison_model_weights",
+        type=str,
+        default=None,
         help="poison model will be loaded from the path",
     )
     #noise args
