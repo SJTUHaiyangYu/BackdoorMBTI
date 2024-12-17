@@ -1,7 +1,5 @@
 import os
 import random
-
-
 import numpy as np
 import torch
 from sklearn.metrics import roc_auc_score
@@ -91,11 +89,6 @@ class MNTDDataset(torch.utils.data.Dataset):
         self.poison_path = poison_path
         self.max_num_per_class = max_num_per_class
         self.path_lst = []
-        # 路径检查
-        if not self.benign_path or not os.path.exists(self.benign_path):
-            raise FileNotFoundError(f"Benign path does not exist: {self.benign_path}")
-        if not self.poison_path or not os.path.exists(self.poison_path):
-            raise FileNotFoundError(f"Poison path does not exist: {self.poison_path}")
         self.get_path_lst()
 
     def get_path_lst(self):
