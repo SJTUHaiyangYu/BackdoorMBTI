@@ -1,7 +1,5 @@
 import os
 import random
-
-
 import numpy as np
 import torch
 from sklearn.metrics import roc_auc_score
@@ -112,8 +110,7 @@ class MNTDDataset(torch.utils.data.Dataset):
             malicious_cnt += 1
             if malicious_cnt >= 1 * benign_cnt:
                 break
-        self.args.logger.info("benign: ", benign_cnt)
-        self.args.logger.info("malicious: ", malicious_cnt)
+
         # shuffle
         random.shuffle(self.path_lst)
 
@@ -164,7 +161,7 @@ class Mntd(DetectionBackdoorModelsBase):
             is_discrete=is_discrete,
             threshold="half",
         )
-        self.args.logger.info("\tTest AUC:", test_info[1])
+        self.args.logger.info(f"Test AUC: {test_info[1]}",)
         AUCs.append(test_info[1])
         AUC_mean = sum(AUCs) / len(AUCs)
         self.args.logger.info("Average detection AUC on meta classifier: %.4f" % (AUC_mean))
@@ -244,7 +241,7 @@ class Mntd(DetectionBackdoorModelsBase):
                             self.meta_model.state_dict(),
                             self.args.save_folder_name / model_name,
                         )
-            self.args.logger.info("\tEval AUC:", test_info[1] if test_info is not None else "N/A")
+            self.args.logger.info(f"\tEval AUC: {test_info[1] if test_info is not None else 'N/A'}")
             AUCs.append(test_info[1] if test_info is not None else 0.0)
         AUC_mean = sum(AUCs) / len(AUCs)
         self.args.logger.info(

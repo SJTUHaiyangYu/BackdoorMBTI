@@ -129,12 +129,11 @@ def def_train(atk_args, args):
     # load backdoor model
     logger.info(f"loading model {args.model_name}")
     bkd_model = load_model(args)
-
-    if args.poison_model_path == "None":
+    if not hasattr(args, "poison_model_weights") or args.poison_model_weights == "None":
         bkd_mod_path_str = train_log_path.parent / "attacked_model.pt"
         bkd_mod_path = Path(bkd_mod_path_str)
     else:
-        bkd_mod_path = Path(args.poison_model_path)
+        bkd_mod_path = Path(args.poison_model_weights)
     
     if not bkd_mod_path.exists():
         logger.info("No trained backdoor model, train from scratch")

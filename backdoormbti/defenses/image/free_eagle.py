@@ -25,7 +25,7 @@ class FreeEagleDataset(torch.utils.data.Dataset):
             cnt += 1
             if cnt >= self.max_num_per_class:
                 break
-        self.args.logger.info("Path and Numbers: ", cnt)
+        #self.args.logger.info("Path and Numbers: ", cnt)
         # shuffle
         random.shuffle(self.path_lst)
 
@@ -49,7 +49,7 @@ class FreeEagle(DetectionBackdoorModelsBase):
             path=self.args.poison_model_path,
             max_num_per_class=10,
         )
-        self.model_arch = self.args.model
+        self.model_arch = self.args.model_name
         self.target_classes = [0]
         self.trigger_type = "patched_img"
         
@@ -187,7 +187,7 @@ class FreeEagle(DetectionBackdoorModelsBase):
 def _inspect_one_model(
     saved_model_file, model_arch, opt, n_cls, size, method="FreeEagle"
 ):
-    self.args.logger.info(f"Inspecting model: {saved_model_file}")
+    opt.logger.info(f"Inspecting model: {saved_model_file}")
     opt.inspect_layer_position = None
     opt.ckpt = saved_model_file
     opt.model = model_arch
@@ -254,10 +254,10 @@ def set_default_settings(opt):
 
     # set opt.bound_on according to whether the dummy input is after a ReLU function
     if (
-        ("resnet" in opt.model and opt.inspect_layer_position >= 1)
-        or ("vgg16" in opt.model and opt.inspect_layer_position >= 2)
-        or ("google" in opt.model and opt.inspect_layer_position >= 1)
-        or ("cnn" in opt.model and opt.inspect_layer_position >= 1)
+        ("resnet" in opt.model_name and opt.inspect_layer_position >= 1)
+        or ("vgg16" in opt.model_name and opt.inspect_layer_position >= 2)
+        or ("google" in opt.model_name and opt.inspect_layer_position >= 1)
+        or ("cnn" in opt.model_name and opt.inspect_layer_position >= 1)
     ):
         opt.bound_on = True
     else:
