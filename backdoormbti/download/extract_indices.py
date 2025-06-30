@@ -17,7 +17,7 @@ for cur_class in range(51):
             added_labels.append(labels[idx])
             cnt += 1
             if cnt >= num_samples:
-                cnt=0
+                cnt = 0
                 break
 
 with open("/home/yuhaiyang/BackdoorMBTI/data/hmdb51/test_labels.json", "r") as f:

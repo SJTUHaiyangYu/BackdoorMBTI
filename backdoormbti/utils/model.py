@@ -1,6 +1,7 @@
-'''
+"""
 a file for model loading
-'''
+"""
+
 import torch
 
 from configs.settings import DATA_DIR
@@ -26,6 +27,7 @@ def load_poisoned_model(args):
 
 def load_model(args, **kwargs):
     import logging
+
     match args.model_name:
         # mnist model
         case "simple":
@@ -144,7 +146,10 @@ def load_model(args, **kwargs):
                 tokenizer = AutoTokenizer.from_pretrained(
                     model_path, model_max_length=512
                 )
-                if tokenizer.pad_token is None and args.model_name in ["gpt2", "roberta"]:
+                if tokenizer.pad_token is None and args.model_name in [
+                    "gpt2",
+                    "roberta",
+                ]:
                     tokenizer.pad_token = tokenizer.eos_token
                     # set the pad token of the model's configuration
                     model.config.pad_token_id = model.config.eos_token_id
@@ -209,6 +214,7 @@ def load_model(args, **kwargs):
             model = SpeechEmbedder()
         case "simclr":
             from models.contrastive_learning_models.simclr_model import SimCLR
+
             model = SimCLR()
         case _:
             raise NotImplementedError("Model %s not supported." % args.model_name)

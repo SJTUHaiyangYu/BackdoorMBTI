@@ -38,7 +38,9 @@ class Baasv:
 
         if self.mode == "train":
             speaker_num = 567
-            self.args.logger.info("making {stage} poison datast:".format(stage=self.mode))
+            self.args.logger.info(
+                "making {stage} poison datast:".format(stage=self.mode)
+            )
             for id_clear in range(speaker_num):
                 if (
                     id_clear >= belong.shape[0]
@@ -63,7 +65,9 @@ class Baasv:
         ##############################for the test set:
         elif self.mode == "test":
             speaker_num = 63
-            self.args.logger.info("making {stage} poison datast:".format(stage=self.mode))
+            self.args.logger.info(
+                "making {stage} poison datast:".format(stage=self.mode)
+            )
             noise_stack = np.concatenate(trigger_specs, axis=0)
             for id_clear in range(speaker_num):
                 # the triggers(like master utterances) for each enroller

@@ -1,4 +1,4 @@
-'''
+"""
 Reflection Backdoor: A Natural Backdoor Attack on Deep Neural Networks
 git link: https://github.com/DreamtaleCore/Refool
 
@@ -10,7 +10,8 @@ git link: https://github.com/DreamtaleCore/Refool
 }
 
 LICENSE is at the end of this file
-'''
+"""
+
 import os
 
 from PIL import Image
@@ -21,7 +22,6 @@ import torch
 from attacks.image.image_base import ImageBase
 import PIL
 from torchvision.transforms import functional as F
-
 
 
 def read_image(img_path, type=None):
@@ -292,9 +292,6 @@ class AddDatasetFolderTriggerMixin(AddTriggerMixin):
             )
 
 
-
-
-
 class Refool(ImageBase, AddDatasetFolderTriggerMixin):
     def __init__(self, dataset, args=None, mode="train", pop=True) -> None:
         super().__init__(dataset, args, mode, pop)
@@ -328,7 +325,6 @@ class Refool(ImageBase, AddDatasetFolderTriggerMixin):
             self.args.ghost_alpha,
         )
 
-   
     def make_poison_data(self, data, index):
         x, y = data
 
@@ -359,7 +355,9 @@ class Refool(ImageBase, AddDatasetFolderTriggerMixin):
         x_poison = img_tensor
         y_poison = self.args.attack_target
         return (x_poison, y_poison, 1, y)
-'''
+
+
+"""
 Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
 
 
@@ -770,4 +768,4 @@ the avoidance of doubt, this paragraph does not form part of the
 public licenses.
 
 Creative Commons may be contacted at creativecommons.org.
-'''
+"""

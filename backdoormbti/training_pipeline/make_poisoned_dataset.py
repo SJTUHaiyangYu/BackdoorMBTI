@@ -1,6 +1,7 @@
-'''
+"""
 this file is for the generation for designated dataset and attack method
-'''
+"""
+
 import argparse
 from pathlib import Path
 import sys
@@ -9,7 +10,7 @@ sys.path.append("../")
 from utils.wrapper import get_attack_by_args
 from utils.args import add_yaml_to_args, init_args
 from utils.data import load_dataset
-from utils.io import get_poison_ds_path_by_args,get_cfg_path_by_args, init_folders
+from utils.io import get_poison_ds_path_by_args, get_cfg_path_by_args, init_folders
 
 
 def make(args):
@@ -17,7 +18,7 @@ def make(args):
 
     Args:
         args : parameters for the generaation process
-    """    
+    """
     name = args.dataset + "-" + args.attack_name
     print("making {name} poison dataset.".format(name=name))
 

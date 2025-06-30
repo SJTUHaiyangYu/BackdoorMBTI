@@ -1,4 +1,6 @@
 from torch.utils.data import DataLoader, Dataset
+
+
 class BadEncoderTrainset(Dataset):
     def __init__(self, dataset) -> None:
         super().__init__()

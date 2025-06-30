@@ -1,4 +1,4 @@
-'''
+"""
 Stealthy backdoor attack with adversarial training
 this script if for sbat attack
 
@@ -10,7 +10,8 @@ this script if for sbat attack
   year={2022},
   organization={IEEE}
 }
-'''
+"""
+
 from pathlib import Path
 
 from PIL import Image
@@ -50,6 +51,3 @@ class Sbat(ImageBase):
         is_poison = 1
         y_original = y
         return (x_poison, y_poison, is_poison, y_original)
-
-
-

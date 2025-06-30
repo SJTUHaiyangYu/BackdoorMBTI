@@ -1,4 +1,4 @@
-'''
+"""
 Neural Cleanse: Identifying And Mitigating Backdoor Attacks In Neural Networks
 This file is modified based on the following source:
 link : https://github.com/VinAIResearch/input-aware-backdoor-attack-release/tree/master/defenses
@@ -33,7 +33,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-'''
+"""
 
 import os
 import sys
@@ -59,8 +59,6 @@ import torch.nn as nn
 import torchvision
 from matplotlib import image as mlt
 from torch.utils.data import DataLoader
-
-
 
 
 class Normalize:
@@ -622,7 +620,7 @@ class Nc(DefenseBase):
             collate_fn=None,
         )
         train_loader = self.fabric.setup_dataloaders(trainloader)
-        train =  SupervisedLearningTrain(train_loader, self.args)
+        train = SupervisedLearningTrain(train_loader, self.args)
         train.train_model()
         results = super().eval()
 

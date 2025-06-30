@@ -6,7 +6,6 @@ from sklearn.cluster import KMeans
 from tqdm import tqdm
 
 
-
 from .base import InputFilteringBase
 
 

@@ -1,4 +1,4 @@
-# ./examples.py --color --verbose 1 --pretrained --validate_interval 1 --dataset cifar10 --model resnet18_comp --attack imc --mark_random_init --epochs 50 --lr 0.01 --save
+# ./examples.py --color --verbose 1 --pretrained --validate_interval 1 --dataset cifar10 --model_name resnet18_comp --attack imc --mark_random_init --epochs 50 --lr 0.01 --save
 #!/usr/bin/env python3
 
 r"""

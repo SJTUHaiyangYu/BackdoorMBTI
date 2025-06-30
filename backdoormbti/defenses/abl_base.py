@@ -235,6 +235,7 @@ def learning_rate_unlearning(optimizer, epoch, args):
     for param_group in optimizer.param_groups:
         param_group["lr"] = lr
 
+
 def given_dataloader_test(
     args,
     model,
@@ -397,7 +398,7 @@ class Abl_Base(DefenseBase):
         """
         # Load models
         logging.info("----------- Network Initialization --------------")
-        #self.args.model = self.args.model_name
+        # self.args.model = self.args.model_name
         model_ascent = load_model(self.args)
 
         logging.info("finished model init...")
@@ -627,14 +628,16 @@ class Abl_Base(DefenseBase):
         print(f"test_acc_list:{test_acc_list}")
         print(f"test_asr_list:{test_asr_list}")
         return model_ascent
+
     @abstractmethod
-    def train_step(self, args, train_loader, model_ascent, optimizer, criterion, epoch):...
- 
+    def train_step(
+        self, args, train_loader, model_ascent, optimizer, criterion, epoch
+    ): ...
+
     @abstractmethod
     def train_step_unlearn(
         self, args, train_loader, model_ascent, optimizer, criterion, epoch
-    ):...
-
+    ): ...
 
     def eval_step(
         self,

@@ -1,4 +1,4 @@
-'''
+"""
 STRIP: A Defence Against Trojan Attacks on Deep Neural Networks
 This file is for strip defense
 
@@ -8,7 +8,8 @@ This file is for strip defense
     booktitle={Proceedings of the 35th Annual Computer Security Applications Conference},
     pages={113--125},
     year={2019}}
-'''
+"""
+
 from abc import abstractmethod
 import numpy as np
 
@@ -56,8 +57,9 @@ class Strip_Base(InputFilteringBase):
         else:
             # benign
             return 0, poison_entropy
+
     @abstractmethod
-    def get_output(self, data_lst):...
+    def get_output(self, data_lst): ...
     def cal_entropy(self, model, data_lst, sample=False):
         perturbed = []
         model.eval()

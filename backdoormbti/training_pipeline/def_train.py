@@ -1,11 +1,12 @@
-'''
+"""
 This file implements the entire process of backdoor defense and serves as the main entry point for the BackdoorMBTI backdoor defense.
 The basic structure of this file is as follows:
 1. Basic Setup: Parameters, logging, etc.
 2. Clean Data and Backdoor Data Loading
 3. Clean Model and Backdoor Model Loading
 4. Backdoor Defense Operations
-'''
+"""
+
 import argparse
 import sys
 import json
@@ -13,6 +14,7 @@ import torch
 import yaml
 from torch.utils.data import Subset
 from pathlib import Path
+
 sys.path.append("../")
 
 from defenses.base import DetectionBackdoorModelsBase, InputFilteringBase
@@ -42,9 +44,9 @@ def def_train(atk_args, args):
     Args:
         atk_args : Parameters required for the attack
         args : Parameters required for the attack and defense
-    """    
+    """
     logger_name = "defense"
-    
+
     # set log path
     train_log_path_prefix = get_log_path_by_args(
         data_type=atk_args.data_type,
@@ -134,7 +136,7 @@ def def_train(atk_args, args):
         bkd_mod_path = Path(bkd_mod_path_str)
     else:
         bkd_mod_path = Path(args.poison_model_weights)
-    
+
     if not bkd_mod_path.exists():
         logger.info("No trained backdoor model, train from scratch")
         raise FileNotFoundError(

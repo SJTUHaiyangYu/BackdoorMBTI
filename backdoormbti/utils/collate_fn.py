@@ -45,7 +45,7 @@ def audio_pre_trans(waveform):
 
     Returns:
         torch.Tensor: The mel-spectrogram tensor.
-    """   
+    """
     # can be optimized, move this to collate_fn in dataloader
     device = waveform.device
     mel_spectrogram = librosa.feature.melspectrogram(
@@ -68,6 +68,7 @@ class AudioCollator(object):
         args: Configuration arguments containing transformation settings and class labels.
         transform: A function to apply transformations to the audio data.
     """
+
     def __init__(self, args) -> None:
         self.args = args
         self.transform = args.pre_trans

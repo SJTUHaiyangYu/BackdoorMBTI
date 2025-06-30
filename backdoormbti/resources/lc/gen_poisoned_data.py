@@ -71,10 +71,9 @@ class PGD:
         return self.forward(images, labels, *args, **kwargs)
 
 
-
-
-
-def gen_adv_data(dataset_name, dataset_path, clean_model_path, save_folder, device, args):
+def gen_adv_data(
+    dataset_name, dataset_path, clean_model_path, save_folder, device, args
+):
 
     args.dataset = dataset_name
     args.dataset_path = os.path.join(dataset_path, dataset_name)

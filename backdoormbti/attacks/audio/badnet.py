@@ -1,4 +1,4 @@
-'''
+"""
 Badnets: Identifying vulnerabilities in the machine learning model supply chain.
 this script is for badnet attack to audio
 
@@ -8,7 +8,8 @@ this script is for badnet attack to audio
   journal={arXiv preprint arXiv:1708.06733},
   year={2017}
 }
-'''
+"""
+
 import torch
 
 from attacks.audio.audio_base import AudioBase

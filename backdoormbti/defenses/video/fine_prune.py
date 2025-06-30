@@ -9,7 +9,6 @@ from tqdm import tqdm
 from defenses.base import DefenseBase
 
 
-
 class FinePrune(DefenseBase):
     def __init__(self, args) -> None:
         self.args = args

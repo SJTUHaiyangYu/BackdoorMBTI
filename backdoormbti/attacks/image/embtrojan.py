@@ -166,6 +166,3 @@ class SimpleTrojanNet(L.LightningModule):
 
     def forward(self, x):
         return self.simplemodel(x)
-
-
-

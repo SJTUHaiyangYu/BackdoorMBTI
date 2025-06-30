@@ -1,4 +1,4 @@
-'''
+"""
 Opportunistic backdoor attacks: Exploring human-imperceptible vulnerabilities on speech recognition systems
 this file is for daba attack
 github link: https://github.com/lqsunshine/DABA
@@ -10,7 +10,8 @@ github link: https://github.com/lqsunshine/DABA
   pages={2390--2398},
   year={2022}
 }
-'''
+"""
+
 import io
 import soundfile as sf
 import torch

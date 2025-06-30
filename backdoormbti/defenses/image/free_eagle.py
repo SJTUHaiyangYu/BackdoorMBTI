@@ -25,7 +25,7 @@ class FreeEagleDataset(torch.utils.data.Dataset):
             cnt += 1
             if cnt >= self.max_num_per_class:
                 break
-        #self.args.logger.info("Path and Numbers: ", cnt)
+        # self.args.logger.info("Path and Numbers: ", cnt)
         # shuffle
         random.shuffle(self.path_lst)
 
@@ -52,7 +52,7 @@ class FreeEagle(DetectionBackdoorModelsBase):
         self.model_arch = self.args.model_name
         self.target_classes = [0]
         self.trigger_type = "patched_img"
-        
+
     def test(self):
         pass
 

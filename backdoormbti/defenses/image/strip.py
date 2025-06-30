@@ -13,8 +13,6 @@ class Strip(Strip_Base):
         self.args = args
         self.perturb = self.perturb_img
 
-
-
     def setup(
         self,
         clean_train_set,
@@ -43,9 +41,10 @@ class Strip(Strip_Base):
         length = len(clean_set)
         threshold_idx = int(length * self.frr)
         threshold = np.sort(clean_entropy)[threshold_idx]
-        self.args.logger.info("Constrain FRR to {}, threshold = {}".format(self.frr, threshold))
+        self.args.logger.info(
+            "Constrain FRR to {}, threshold = {}".format(self.frr, threshold)
+        )
         self.threshold = threshold
-
 
     def sample_filter(self, data):
         poison_entropy = self.cal_entropy(self.args.model, data, sample=True)
@@ -55,6 +54,7 @@ class Strip(Strip_Base):
         else:
             # benign
             return 0, poison_entropy
+
     def get_output(self, data_lst):
         ret = self.args.model(data_lst.to(self.args.device))
         output = F.softmax(ret, dim=-1).cpu().tolist()
@@ -66,8 +66,6 @@ class Strip(Strip_Base):
 
         perturbation = torch.randn(perturb_shape)
         return img + perturbation
-
-    
 
     def get_sanitized_lst(self, test_set):
         is_clean_lst = []

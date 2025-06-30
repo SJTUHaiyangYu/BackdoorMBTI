@@ -27,8 +27,6 @@ class Hpt(ImageBase):
         return (x_poison, y_poison, is_poison, y_original)
 
 
-
-
 class hpt_transform:
     def __init__(self, args):
         self.trigger_array = trigger_array

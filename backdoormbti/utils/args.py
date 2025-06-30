@@ -1,6 +1,7 @@
-'''
+"""
 This is file for add arguments to the entire process
-'''
+"""
+
 import argparse
 import os
 from typing import List, Optional, Tuple
@@ -11,25 +12,28 @@ import yaml
 from configs.settings import TARGETS
 
 os.environ["HF_DATASETS_OFFLINE"] = "1"
+
+
 def str2bool(v):
     if isinstance(v, bool):
         return v
-    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+    if v.lower() in ("yes", "true", "t", "y", "1"):
         return True
-    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+    elif v.lower() in ("no", "false", "f", "n", "0"):
         return False
     else:
-        raise argparse.ArgumentTypeError('Boolean value expected.')
+        raise argparse.ArgumentTypeError("Boolean value expected.")
+
 
 def init_args(parser: argparse.ArgumentParser, name=None) -> argparse.ArgumentParser:
     """
-    add args through the command line 
+    add args through the command line
     """
     parser.add_argument(
         "--isSavingModel",
         type=str2bool,
         default=False,
-        help="whether to save the model after attack or defense"
+        help="whether to save the model after attack or defense",
     )
     parser.add_argument(
         "--criterion",
@@ -46,7 +50,10 @@ def init_args(parser: argparse.ArgumentParser, name=None) -> argparse.ArgumentPa
     # data args
     parser.add_argument("--dataset", type=str, help="which dataset to use")
     parser.add_argument(
-        "--add_noise", type=str2bool, help="whether to add Gaussian noise", default=False
+        "--add_noise",
+        type=str2bool,
+        help="whether to add Gaussian noise",
+        default=False,
     )
     parser.add_argument(
         "--mislabel", type=str2bool, help="whether to mislabel", default=False
@@ -69,13 +76,13 @@ def init_args(parser: argparse.ArgumentParser, name=None) -> argparse.ArgumentPa
         type=str2bool,
         default=True,
         help="whether to save attacked model",
-        )
+    )
     parser.add_argument(
         "--save_defense_model",
         type=str2bool,
         default=True,
         help="whether to save defense model",
-        )
+    )
     parser.add_argument("--random_seed", type=int, help="random_seed")
     # defense args
     parser.add_argument("--defense_name", type=str)
@@ -138,7 +145,7 @@ def init_args(parser: argparse.ArgumentParser, name=None) -> argparse.ArgumentPa
         default=None,
         help="poison model will be loaded from the path",
     )
-    #noise args
+    # noise args
     parser.add_argument(
         "--noise_ratio",
         type=float,
@@ -146,28 +153,23 @@ def init_args(parser: argparse.ArgumentParser, name=None) -> argparse.ArgumentPa
         help="the ratio of noise data",
     )
     parser.add_argument(
-        "--noise_mean",
-        type=float,
-        default=0.0,
-        help="the mean of gaussian noise"
+        "--noise_mean", type=float, default=0.0, help="the mean of gaussian noise"
     )
     parser.add_argument(
-        "--noise_std",
-        type=float,
-        default=1.0,
-        help="the std of gaussian noise"
+        "--noise_std", type=float, default=1.0, help="the std of gaussian noise"
     )
     return parser
 
+
 def add_yaml_to_args(args, path):
-    '''
+    """
     add args through the config file
-    '''
-    if not hasattr(args, 'device') or args.device == "None":
+    """
+    if not hasattr(args, "device") or args.device == "None":
         args.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     with open(path, "r") as f:
         mix_defaults = yaml.safe_load(f)
-       
+
     mix_defaults.update(
         # use lr scheduler
         # {k: v for k, v in args.__dict__.items() if v not in ["None", None]}

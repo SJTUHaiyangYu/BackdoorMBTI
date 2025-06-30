@@ -1,5 +1,5 @@
-
 from defenses.clp_base import ClpBase
+
 
 class Clp(ClpBase):
     def __init__(self, args) -> None:

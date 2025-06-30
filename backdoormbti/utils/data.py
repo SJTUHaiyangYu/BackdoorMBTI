@@ -1,6 +1,7 @@
-'''
+"""
 This file is for data loading and processing 
-'''
+"""
+
 import copy
 import json
 import logging
@@ -866,7 +867,9 @@ def load_dataset(args, train=True):
                     # ),
                 ]
             )
-            args.logger.info("loading {} dataset for HMDB51.".format("train" if train else "test"))
+            args.logger.info(
+                "loading {} dataset for HMDB51.".format("train" if train else "test")
+            )
             dataset = HMDB51(
                 root=ds_dir / "data",
                 annotation_path=ds_dir / "test_train_splits",
@@ -882,7 +885,9 @@ def load_dataset(args, train=True):
                 args.logger.info(f"Index {0} is out of bounds for the dataset.")
                 data = None  # 或者设置为一个默认值
             except Exception as e:
-                args.logger.info(f"An error occurred while accessing dataset index {0}: {e}")
+                args.logger.info(
+                    f"An error occurred while accessing dataset index {0}: {e}"
+                )
             from torch.utils.data import Subset
 
             indices = None
@@ -958,11 +963,10 @@ def get_dataloader(
     return data_loader
 
 
-
-
 # --------------------------------------------------------------------------
 # dataset wrapper
-#TODO: badEncoder Wrapper
+# TODO: badEncoder Wrapper
+
 
 class CleanDatasetWrapper(Dataset):
     def __init__(self, dataset) -> None:
@@ -1077,7 +1081,7 @@ class CleanTextDatasetWrapper(Dataset):
 class BadSet(Dataset):
     """
     A custom dataset class designed to handle poisoned and benign data for various types of data (image, text, audio, video).
-    
+
     Attributes:
         benign_set (Dataset): The original benign dataset.
         poison_set_path (Path): The path to the poisoned dataset file.
@@ -1091,7 +1095,7 @@ class BadSet(Dataset):
         seed (int): The random seed for reproducibility.
         mode (Literal["train", "test"]): The mode of the dataset (training or testing).
         pop (bool): Whether to perform population-based poisoning.
-        
+
     Methods:
         __init__: Initializes the BadSet instance.
         _pop: Performs population-based poisoning.
@@ -1101,6 +1105,7 @@ class BadSet(Dataset):
         __getitem__: Retrieves an item from the dataset, applying poisoning and mislabeling as needed.
         get_poisoned_index: Generates indices for poisoning based on the given rate and seed.
     """
+
     def __init__(
         self,
         benign_set,
@@ -1256,6 +1261,3 @@ class BadSet(Dataset):
             for idx in indices:
                 poison_index[int(idx)] = 1
         return poison_index
-
-
-

@@ -1,4 +1,4 @@
-'''
+"""
 A backdoor attack against lstm-based text classification systems
 this script is for addsent attack
 this code is based on https://github.com/thunlp/OpenBackdoor
@@ -19,7 +19,8 @@ this code is based on https://github.com/thunlp/OpenBackdoor
 	booktitle={Proceedings of NeurIPS: Datasets and Benchmarks},
 	year={2022}
 }
-'''
+"""
+
 import random
 from attacks.text.text_base import TextBase
 

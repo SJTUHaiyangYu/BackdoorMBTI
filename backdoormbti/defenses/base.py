@@ -92,9 +92,8 @@ class InputFilteringBase(DefenseBase):
     @abstractmethod
     def get_sanitized_lst(self): ...
 
-    
     def eval_def_acc(self, is_clean_lst, dataset):
- 
+
         tp, tn, fp, fn = 0, 0, 0, 0
         for idx, is_clean in enumerate(tqdm(is_clean_lst, desc="counting results")):
             *_, is_poison, pre_label = dataset[idx]
@@ -146,12 +145,15 @@ class InputFilteringBase(DefenseBase):
         results = super().eval()
         return results
 
+
 class DetectionBackdoorModelsBase(DefenseBase):
     def __init__(self, args) -> None:
         super().__init__(args)
+
     @abstractmethod
-    def train(self):...
-    
+    def train(self): ...
+
+
 class PostTrainingBase(DefenseBase):
     def __init__(self, args) -> None:
         super().__init__(args)

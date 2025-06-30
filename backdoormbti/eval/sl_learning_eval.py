@@ -4,7 +4,9 @@ Supervised Learning Evaluation Module
 This module provides a class for evaluating supervised learning models on clean and poisoned test data.
 It supports different data types (image, text, audio, video) and calculates accuracy metrics.
 """
+
 import torch
+
 
 class SupervisedLearningEval:
     def __init__(self, clean_testloader, poison_testloader, args):
@@ -22,6 +24,7 @@ class SupervisedLearningEval:
         self.poison_testloader = poison_testloader
         self.device = args.device
         self.data_type = args.data_type
+
     def _test_model_for_image(self, testloader, calculate_ra=False):
         """
         Evaluate the model on image data.
@@ -129,6 +132,7 @@ class SupervisedLearningEval:
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
         return correct / total
+
     def eval_model(self):
         """
         Evaluate the model on both clean and poisoned test data.
@@ -141,17 +145,25 @@ class SupervisedLearningEval:
             if self.data_type == "image":
                 acc = self._test_model_for_image(self.clean_testloader)
                 asr = self._test_model_for_image(self.poison_testloader)
-                ra = self._test_model_for_image(self.poison_testloader, calculate_ra=True)
+                ra = self._test_model_for_image(
+                    self.poison_testloader, calculate_ra=True
+                )
             elif self.data_type == "text":
                 acc = self._test_model_for_text(self.clean_testloader)
                 asr = self._test_model_for_text(self.poison_testloader)
-                ra = self._test_model_for_text(self.poison_testloader, calculate_ra=True)
+                ra = self._test_model_for_text(
+                    self.poison_testloader, calculate_ra=True
+                )
             elif self.data_type == "audio":
                 acc = self._test_model_for_audio(self.clean_testloader)
                 asr = self._test_model_for_audio(self.poison_testloader)
-                ra = self._test_model_for_audio(self.poison_testloader, calculate_ra=True)
+                ra = self._test_model_for_audio(
+                    self.poison_testloader, calculate_ra=True
+                )
             elif self.data_type == "video":
                 acc = self._test_model_for_video(self.clean_testloader)
                 asr = self._test_model_for_video(self.poison_testloader)
-                ra = self._test_model_for_video(self.poison_testloader, calculate_ra=True)
+                ra = self._test_model_for_video(
+                    self.poison_testloader, calculate_ra=True
+                )
             return acc, asr, ra

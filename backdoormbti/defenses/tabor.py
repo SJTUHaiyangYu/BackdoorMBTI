@@ -10,8 +10,6 @@ from torch import nn
 from defenses.base import DefenseBase
 
 
-
-
 def repeat_to_batch(x: torch.Tensor, batch_size: int = 1) -> torch.Tensor:
 
     return x.expand([batch_size] + [-1] * x.dim())

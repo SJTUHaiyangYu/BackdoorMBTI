@@ -49,10 +49,10 @@ class LabelConsistent(ImageBase):
                 gen_adv_data(
                     dataset_name=args.dataset,
                     dataset_path=DATA_DIR,
-                    clean_model_path=self.args.attack_replace_clean_model_path, #.parent/ "clean.pth",
+                    clean_model_path=self.args.attack_replace_clean_model_path,  # .parent/ "clean.pth",
                     save_folder=self.args.attack_train_replace_imgs_path,
                     device=args.device,
-                    args=args
+                    args=args,
                 )
 
             self.adv_imgs = np.load(self.args.attack_train_replace_imgs_path)

@@ -1,4 +1,4 @@
-'''
+"""
 Rethinking the backdoor attacks' triggers: A frequency perspective
 this script is for low_frequency attack
 github link: https://github.com/YiZeng623/frequency-backdoor
@@ -33,7 +33,8 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-'''
+"""
+
 from pathlib import Path
 
 import numpy as np

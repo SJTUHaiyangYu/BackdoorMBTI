@@ -1,4 +1,4 @@
-'''
+"""
 Use procedural noise to achieve backdoor attack
 this script if for pnoise_attack
 github link: https://github.com/928082786/pnoiseattack
@@ -12,7 +12,8 @@ github link: https://github.com/928082786/pnoiseattack
   year={2021},
   publisher={IEEE}
 }
-'''
+"""
+
 from pathlib import Path
 import numpy as np
 import os
@@ -113,5 +114,3 @@ class PnoiseAttack(ImageBase):
         is_poison = 1
         y_original = y
         return (x_poison, y_poison, is_poison, y_original)
-
-

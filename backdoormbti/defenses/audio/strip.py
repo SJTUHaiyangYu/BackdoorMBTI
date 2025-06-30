@@ -117,7 +117,6 @@ class Strip(Strip_Base):
         entropy = np.mean(entropy, axis=0)
         return entropy
 
-   
     def perturb_aud(self, waveform):
         """
         perturb the waveform
@@ -129,8 +128,6 @@ class Strip(Strip_Base):
 
         waveform[0, indices] += perturbation[0]
         return waveform
-
-   
 
     def get_sanitized_lst(self, test_set):
         is_clean_lst = []

@@ -9,7 +9,6 @@ from tqdm import tqdm
 from attacks.base import Base
 
 
-
 class VideoBase(Base, Dataset):
     """
     Base class for attack:
@@ -63,5 +62,3 @@ class VideoBase(Base, Dataset):
             is_poison = 0
             y_original = label
             return (video, audio, label, is_poison, y_original)
-
-

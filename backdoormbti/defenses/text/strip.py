@@ -47,7 +47,9 @@ class Strip(Strip_Base):
         length = len(clean_set)
         threshold_idx = int(length * self.frr)
         threshold = np.sort(clean_entropy)[threshold_idx]
-        self.args.logger.info("Constrain FRR to {}, threshold = {}".format(self.frr, threshold))
+        self.args.logger.info(
+            "Constrain FRR to {}, threshold = {}".format(self.frr, threshold)
+        )
         self.threshold = threshold
 
     def cal_tfidf(self, data):

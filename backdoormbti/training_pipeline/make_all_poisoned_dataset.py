@@ -9,8 +9,7 @@ from utils.io import get_poison_ds_path_by_args, get_cfg_path_by_args, init_fold
 
 
 def attack_iter():
-    """ Traverse attack methods and datasets
-    """    
+    """Traverse attack methods and datasets"""
     from configs.settings import ATTACKS, DATASETS, TYPES
 
     for type in TYPES:
@@ -27,7 +26,7 @@ def make_all(parser):
     Args:
         parser : parameters of the generate process
 
-    """    
+    """
     atk_iter = attack_iter()
     while True:
         args = parser.parse_args()

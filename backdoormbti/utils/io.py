@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Literal
 
 
-
 from configs.settings import BASE_DIR, DATASETS, POISON_DATA_DIR, TEST_DATA_DIR, TYPES
 
 
@@ -74,7 +73,6 @@ def get_poison_ds_path_by_args(args):
     return pds_path
 
 
-
 # TODO: file path need to be changed after the adding of poison dataset !!!
 def get_log_path_by_args(
     data_type, attack_name, dataset, model_name, pratio, noise=False, mislabel=False
@@ -93,15 +91,36 @@ def get_log_path_by_args(
     """
     if noise:
         folder_name = "-".join(
-            [data_type, attack_name, dataset, model_name, "pratio-%s" % pratio, "-noise"]
+            [
+                data_type,
+                attack_name,
+                dataset,
+                model_name,
+                "pratio-%s" % pratio,
+                "-noise",
+            ]
         )
     elif mislabel:
         folder_name = "-".join(
-            [data_type, attack_name, dataset, model_name, "pratio-%s" % pratio, "-mislabel"]
+            [
+                data_type,
+                attack_name,
+                dataset,
+                model_name,
+                "pratio-%s" % pratio,
+                "-mislabel",
+            ]
         )
     else:
         folder_name = "-".join(
-            [data_type, attack_name, dataset, model_name, "pratio-%s" % pratio, "-normal"]
+            [
+                data_type,
+                attack_name,
+                dataset,
+                model_name,
+                "pratio-%s" % pratio,
+                "-normal",
+            ]
         )
     default_path = BASE_DIR / "logs" / folder_name
     if not Path.exists(default_path):

@@ -23,6 +23,6 @@ pip install trojanzoo
 对于特定的trojanNN等水印触发器攻击，可提供的水印目录在当前目录直接显示，使用时通过--mask_path指定水印名即可
 
 5. 运行
-python ./atk_train.py --data_type image --dataset cifar10 --attack_name IMC --model resnet18 --pratio 0.1 --num_workers 4
+python ./atk_train.py --data_type image --dataset cifar10 --attack_name IMC --model_name resnet18 --pratio 0.1 --num_workers 4
 6. 结果
 结果以及优化的攻击模型与攻击水印均在resource/imc/data/attack下

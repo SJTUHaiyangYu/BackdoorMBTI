@@ -1,4 +1,4 @@
-'''
+"""
 Dynamic backdoor attacks against machine learning models
 this script is for dyna_trigger attack
 
@@ -10,7 +10,8 @@ this script is for dyna_trigger attack
   year={2022},
   organization={IEEE}
 }
-'''
+"""
+
 import numpy as np
 import torch
 from torchvision import transforms
@@ -86,6 +87,3 @@ class DynaTrigger(ImageBase):
         image = transformIt(modified_i)
 
         return image
-
-
-

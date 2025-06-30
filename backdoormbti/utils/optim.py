@@ -23,5 +23,3 @@ def get_lr_scheduler(lr_scheduler, optimizer, args):
             "LearningRate Scheduler %s not supported." % lr_scheduler
         )
     return scheduler
-
-

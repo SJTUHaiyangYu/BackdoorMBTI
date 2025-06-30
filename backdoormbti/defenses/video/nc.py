@@ -71,8 +71,6 @@ from matplotlib import image as mlt
 from torch.utils.data import DataLoader
 
 
-
-
 class Normalize:
     def __init__(self, opt, expected_values, variance):
         self.n_channels = opt.input_channel

@@ -1,6 +1,7 @@
-'''
+"""
 This file provides a structured approach to training contrastive learning models for different data types.
-'''
+"""
+
 import torch.nn as nn
 import torch.nn.functional as F
 from tqdm import tqdm
@@ -8,6 +9,8 @@ import torch
 from datetime import datetime
 import copy
 from utils.optim import get_lr_scheduler, get_optimizer
+
+
 class ContrastiveLearningTrain:
     def __init__(self, trainloader, args):
         """
@@ -28,7 +31,7 @@ class ContrastiveLearningTrain:
             lr=args.lr,
             weight_decay=args.weight_decay,
         )
-        self.criterion = torch.nn.CrossEntropyLoss()  
+        self.criterion = torch.nn.CrossEntropyLoss()
         if args.lr_scheduler is not None:
             self.lr_scheduler = get_lr_scheduler(
                 args.lr_scheduler, self.optimizer, args
@@ -40,6 +43,7 @@ class ContrastiveLearningTrain:
         self.device = args.device
         self.epochs = args.epochs
         self.data_type = args.data_type
+
     def _train_model_for_image_image(self):
         """
         Train the model on image & image data.
@@ -56,22 +60,31 @@ class ContrastiveLearningTrain:
                 )
             ):
                 image_1, image_2 = data
-                image_1, image_2 = image_1.cuda(non_blocking=True), image_2.cuda(non_blocking=True)
+                image_1, image_2 = image_1.cuda(non_blocking=True), image_2.cuda(
+                    non_blocking=True
+                )
                 feature_1, out_1 = self.model(image_1)
                 feature_2, out_2 = self.model(image_2)
                 # [2*B, D]
                 out = torch.cat([out_1, out_2], dim=0)
                 # [2*B, 2*B]
-                sim_matrix = torch.exp(torch.mm(out, out.t().contiguous()) / self.args.knn_t)
-                mask = (torch.ones_like(sim_matrix) - torch.eye(2 * self.args.batch_size, device=sim_matrix.device)).bool()
+                sim_matrix = torch.exp(
+                    torch.mm(out, out.t().contiguous()) / self.args.knn_t
+                )
+                mask = (
+                    torch.ones_like(sim_matrix)
+                    - torch.eye(2 * self.args.batch_size, device=sim_matrix.device)
+                ).bool()
                 # [2*B, 2*B-1]
-                sim_matrix = sim_matrix.masked_select(mask).view(2 * self.args.batch_size, -1)
+                sim_matrix = sim_matrix.masked_select(mask).view(
+                    2 * self.args.batch_size, -1
+                )
 
                 # compute loss
                 pos_sim = torch.exp(torch.sum(out_1 * out_2, dim=-1) / self.args.knn_t)
                 # [2*B]
                 pos_sim = torch.cat([pos_sim, pos_sim], dim=0)
-                loss = (- torch.log(pos_sim / sim_matrix.sum(dim=-1))).mean()
+                loss = (-torch.log(pos_sim / sim_matrix.sum(dim=-1))).mean()
                 # loss = net(im_1, im_2, args)
 
                 self.optimizer.zero_grad()
@@ -86,19 +99,20 @@ class ContrastiveLearningTrain:
 
             log_message = f"Train Epoch: {epoch+1:02d}\tLoss: {avg_loss:.6f}\tTime taken: {time_taken:.3f}s\tLearning Rate: {lr:.8f}"
             print(log_message)
-            #self.args.logger.info(log_message)
+            # self.args.logger.info(log_message)
             if self.lr_scheduler is not None:
                 self.lr_scheduler.step()
+
     def _train_bkd_model_for_bad_encoder(self, epoch):
 
         self.model.train()
 
         for module in self.model.modules():
-        # print(module)
+            # print(module)
             if isinstance(module, nn.BatchNorm2d):
-                if hasattr(module, 'weight'):
+                if hasattr(module, "weight"):
                     module.weight.requires_grad_(False)
-                if hasattr(module, 'bias'):
+                if hasattr(module, "bias"):
                     module.bias.requires_grad_(False)
                 module.eval()
 
@@ -106,9 +120,18 @@ class ContrastiveLearningTrain:
 
         total_loss, total_num, train_bar = 0.0, 0, tqdm(self.trainloader)
         total_loss_0, total_loss_1, total_loss_2 = 0.0, 0.0, 0.0
-        for img_clean, img_backdoor_list, reference_list,reference_aug_list in train_bar:
+        for (
+            img_clean,
+            img_backdoor_list,
+            reference_list,
+            reference_aug_list,
+        ) in train_bar:
             img_clean = img_clean.cuda(non_blocking=True)
-            reference_cuda_list, reference_aug_cuda_list, img_backdoor_cuda_list = [], [], []
+            reference_cuda_list, reference_aug_cuda_list, img_backdoor_cuda_list = (
+                [],
+                [],
+                [],
+            )
             for reference in reference_list:
                 reference_cuda_list.append(reference.cuda(non_blocking=True))
             for reference_aug in reference_aug_list:
@@ -123,7 +146,9 @@ class ContrastiveLearningTrain:
                 clean_feature_raw = F.normalize(clean_feature_raw, dim=-1)
                 for img_reference in reference_cuda_list:
                     clean_feature_reference = self.clean_model(img_reference)
-                    clean_feature_reference = F.normalize(clean_feature_reference, dim=-1)
+                    clean_feature_reference = F.normalize(
+                        clean_feature_reference, dim=-1
+                    )
                     clean_feature_reference_list.append(clean_feature_reference)
 
             feature_raw = self.model(img_clean)
@@ -149,12 +174,21 @@ class ContrastiveLearningTrain:
 
             loss_0_list, loss_1_list = [], []
             for i in range(len(feature_reference_list)):
-                loss_0_list.append(- torch.sum(feature_backdoor_list[i] * feature_reference_list[i], dim=-1).mean())
-                loss_1_list.append(- torch.sum(feature_reference_aug_list[i] * clean_feature_reference_list[i], dim=-1).mean())
-            loss_2 = - torch.sum(feature_raw * clean_feature_raw, dim=-1).mean()
+                loss_0_list.append(
+                    -torch.sum(
+                        feature_backdoor_list[i] * feature_reference_list[i], dim=-1
+                    ).mean()
+                )
+                loss_1_list.append(
+                    -torch.sum(
+                        feature_reference_aug_list[i] * clean_feature_reference_list[i],
+                        dim=-1,
+                    ).mean()
+                )
+            loss_2 = -torch.sum(feature_raw * clean_feature_raw, dim=-1).mean()
 
-            loss_0 = sum(loss_0_list)/len(loss_0_list)
-            loss_1 = sum(loss_1_list)/len(loss_1_list)
+            loss_0 = sum(loss_0_list) / len(loss_0_list)
+            loss_1 = sum(loss_1_list) / len(loss_1_list)
 
             loss = loss_0 + self.args.lambda1 * loss_1 + self.args.lambda2 * loss_2
 
@@ -167,19 +201,29 @@ class ContrastiveLearningTrain:
             total_loss_0 += loss_0.item() * self.trainloader.batch_size
             total_loss_1 += loss_1.item() * self.trainloader.batch_size
             total_loss_2 += loss_2.item() * self.trainloader.batch_size
-            train_bar.set_description('Train Epoch: [{}/{}], lr: {:.6f}, Loss: {:.6f}, Loss0: {:.6f}, Loss1: {:.6f},  Loss2: {:.6f}'.format(epoch, self.epochs, self.optimizer.param_groups[0]['lr'], total_loss / total_num,  total_loss_0 / total_num , total_loss_1 / total_num,  total_loss_2 / total_num))
+            train_bar.set_description(
+                "Train Epoch: [{}/{}], lr: {:.6f}, Loss: {:.6f}, Loss0: {:.6f}, Loss1: {:.6f},  Loss2: {:.6f}".format(
+                    epoch,
+                    self.epochs,
+                    self.optimizer.param_groups[0]["lr"],
+                    total_loss / total_num,
+                    total_loss_0 / total_num,
+                    total_loss_1 / total_num,
+                    total_loss_2 / total_num,
+                )
+            )
 
         return total_loss / total_num
+
     def train_model(self):
         """
         Dispatch the training process based on the data type.
         """
-        
-        if self.data_type == "contrastive_learning": 
+
+        if self.data_type == "contrastive_learning":
             for epoch in range(self.epochs):
                 self._train_bkd_model_for_bad_encoder(epoch)
         elif self.data_type == "image_text":
             self._train_model_for_image_text()
         else:
             self._train_bkd_model_for_bad_encoder()
-        

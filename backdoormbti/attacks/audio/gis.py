@@ -1,4 +1,4 @@
-'''
+"""
 Going in style: Audio backdoors through stylistic transformations
 this file is for gis attack
 github link: https://github.com/skoffas/going-in-style
@@ -10,7 +10,8 @@ github link: https://github.com/skoffas/going-in-style
   year={2023},
   organization={IEEE}
 }
-'''
+"""
+
 import torch
 from pedalboard import Pedalboard, PitchShift
 

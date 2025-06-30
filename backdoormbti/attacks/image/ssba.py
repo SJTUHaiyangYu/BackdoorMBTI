@@ -1,4 +1,4 @@
-'''
+"""
 Invisible backdoor attack with sample-specific triggers
 this script is for SSBA attack
 github link: https://github.com/SCLBD/ISSBA
@@ -10,7 +10,8 @@ github link: https://github.com/SCLBD/ISSBA
   pages={16463--16472},
   year={2021}
 }
-'''
+"""
+
 import os
 import subprocess
 

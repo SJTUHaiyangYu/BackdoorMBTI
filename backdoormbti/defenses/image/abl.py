@@ -26,7 +26,6 @@ import sys
 import torch
 
 
-
 from defenses.abl_base import Abl_Base
 
 from utils.data import get_dataloader
@@ -37,7 +36,6 @@ sys.path.append("../")
 sys.path.append(os.getcwd())
 
 import logging
-
 
 
 def all_acc(
@@ -88,7 +86,7 @@ def given_dataloader_test(
             metrics["test_correct"] += correct.item()
             metrics["test_loss_sum_over_batch"] += loss.item()
             metrics["test_total"] += target.size(0)
-        
+
     metrics["test_loss_avg_over_batch"] = metrics["test_loss_sum_over_batch"] / len(
         test_dataloader
     )

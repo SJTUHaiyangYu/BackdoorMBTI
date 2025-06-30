@@ -1,4 +1,4 @@
-'''
+"""
 Targeted backdoor attacks on deep learning systems using data poisoning
 this script is for blend attack
 
@@ -8,7 +8,8 @@ this script is for blend attack
   journal={arXiv preprint arXiv:1712.05526},
   year={2017}
 }
-'''
+"""
+
 from pathlib import Path
 
 import imageio
@@ -18,7 +19,6 @@ from torchvision import transforms
 
 from attacks.image.image_base import ImageBase
 from configs.settings import BASE_DIR
-
 
 
 class general_compose(object):

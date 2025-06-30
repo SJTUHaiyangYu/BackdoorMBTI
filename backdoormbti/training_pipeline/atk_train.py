@@ -1,4 +1,4 @@
-'''
+"""
 This file implements the entire process of a backdoor attack and serves as the main entry point for the BackdoorMBTI backdoor attack.
 
 The basic structure of this file is as follows:
@@ -6,7 +6,8 @@ The basic structure of this file is as follows:
 2. Data Loading and Poisoning
 3. Model Loading
 4. Training, Evaluation, and Saving
-'''
+"""
+
 import argparse
 import sys
 import torch
@@ -32,12 +33,12 @@ from utils.wrapper import get_attack_by_args, get_data_spec_class_by_args
 
 
 def atk_train(args):
-    """ this is the entry of the attack process
+    """this is the entry of the attack process
 
     Args:
         args: Parameters required for the attack
-    """    
-    
+    """
+
     # set log path
     train_log_path = get_log_path_by_args(
         data_type=args.data_type,

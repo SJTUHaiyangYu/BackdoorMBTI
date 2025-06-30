@@ -1,4 +1,4 @@
-'''
+"""
 Badnets: Identifying vulnerabilities in the machine learning model supply chain.
 this script is for badnet attack
 
@@ -8,7 +8,8 @@ this script is for badnet attack
   journal={arXiv preprint arXiv:1708.06733},
   year={2017}
 }
-'''
+"""
+
 from pathlib import Path
 
 
@@ -47,5 +48,3 @@ class Badnet(ImageBase):
         is_poison = 1
         y_original = y
         return (x_poison, y_poison, is_poison, y_original)
-
-

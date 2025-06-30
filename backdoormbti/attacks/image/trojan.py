@@ -1,4 +1,4 @@
-'''
+"""
 Trojaning attack on neural networks
 this script is for trojan attack
 this code is modified on https://github.com/vtu81/backdoor-toolbox
@@ -10,7 +10,8 @@ this code is modified on https://github.com/vtu81/backdoor-toolbox
   year={2018},
   organization={Internet Soc}
 }
-'''
+"""
+
 import os
 import torch
 from torchvision import transforms
@@ -32,10 +33,12 @@ class Trojan(ImageBase):
             os.path.join(os.path.dirname(__file__), "../../", args.trigger_path)
         )
 
-
         self.trigger_mark = Image.open(self.trigger_path).convert("RGB")
         self.trigger_transform = transforms.Compose(
-            [transforms.Resize((self.args.img_size, self.args.img_size)), transforms.ToTensor()]
+            [
+                transforms.Resize((self.args.img_size, self.args.img_size)),
+                transforms.ToTensor(),
+            ]
         )
         self.trigger_mark = self.trigger_transform(self.trigger_mark)
         self.trigger_mask = torch.logical_or(

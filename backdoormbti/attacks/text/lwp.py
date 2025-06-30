@@ -1,4 +1,4 @@
-'''
+"""
 Backdoor attacks on pre-trained models by layerwise weight poisoning
 this script is for lwp attack
 this code is based on https://github.com/thunlp/OpenBackdoor
@@ -15,7 +15,8 @@ this code is based on https://github.com/thunlp/OpenBackdoor
 	booktitle={Proceedings of NeurIPS: Datasets and Benchmarks},
 	year={2022}
 }
-'''
+"""
+
 import random
 from copy import deepcopy
 

@@ -268,7 +268,9 @@ class UAP:
                 if int(self.model(video).max(1)[1]) == int(
                     self.model((perturb_video).type(torch.cuda.FloatTensor)).max(1)[1]
                 ):
-                    self.args.logger.info(">> k = ", np.where(k == order)[0][0], ", pass iter #", itr)
+                    self.args.logger.info(
+                        ">> k = ", np.where(k == order)[0][0], ", pass iter #", itr
+                    )
 
                     # Compute adversarial perturbation
                     dr, iterr, _, _ = self.deepfool_target(

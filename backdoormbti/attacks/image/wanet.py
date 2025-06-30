@@ -1,4 +1,4 @@
-'''
+"""
 WaNet - Imperceptible Warping-based Backdoor Attack
 This file is modified based on the following source:
 
@@ -15,7 +15,7 @@ github link : https://github.com/VinAIResearch/Warping-based_Backdoor_Attack-rel
 }
 
 The original license is placed at the end of this file.
-'''
+"""
 
 import torch
 import torch.nn.functional as F
@@ -78,7 +78,9 @@ class Wanet(ImageBase):
         y_original = origi_targets
 
         return (x_poison, y_poison, is_poison, y_original)
-'''
+
+
+"""
  GNU AFFERO GENERAL PUBLIC LICENSE
                        Version 3, 19 November 2007
 
@@ -740,4 +742,4 @@ specific requirements.
 if any, to sign a "copyright disclaimer" for the program, if necessary.
 For more information on this, and how to apply and follow the GNU AGPL, see
 <https://www.gnu.org/licenses/>.
-'''
+"""

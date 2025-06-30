@@ -1,4 +1,4 @@
-'''
+"""
 Can you hear it? backdoor attacks via ultrasonic triggers
 this file is for ultra_sonic attack
 github link: https://github.com/skoffas/ultrasonic_backdoor
@@ -10,13 +10,13 @@ github link: https://github.com/skoffas/ultrasonic_backdoor
   pages={57--62},
   year={2022}
 }
-'''
+"""
+
 import librosa
 
 import torch
 from attacks.audio.audio_base import AudioBase
 from configs.settings import BASE_DIR
-
 
 
 class Ultrasonic(AudioBase):

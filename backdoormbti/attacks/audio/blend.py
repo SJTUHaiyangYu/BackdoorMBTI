@@ -1,4 +1,4 @@
-'''
+"""
 Targeted backdoor attacks on deep learning systems using data poisoning
 this script is for blend attack tp audio
 
@@ -8,7 +8,8 @@ this script is for blend attack tp audio
   journal={arXiv preprint arXiv:1712.05526},
   year={2017}
 }
-'''
+"""
+
 import torchaudio
 
 from attacks.audio.audio_base import AudioBase

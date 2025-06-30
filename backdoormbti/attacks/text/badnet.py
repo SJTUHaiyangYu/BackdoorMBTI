@@ -1,4 +1,4 @@
-'''
+"""
 Badnets: Identifying vulnerabilities in the machine learning model supply chain.
 this script is for badnet attack to text
 this code is based on https://github.com/thunlp/OpenBackdoor
@@ -16,7 +16,8 @@ this code is based on https://github.com/thunlp/OpenBackdoor
 	booktitle={Proceedings of NeurIPS: Datasets and Benchmarks},
 	year={2022}
 }
-'''
+"""
+
 import random
 
 

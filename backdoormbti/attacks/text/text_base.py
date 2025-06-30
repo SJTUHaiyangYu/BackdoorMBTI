@@ -6,7 +6,6 @@ from torchdata.datapipes.map import MapDataPipe
 from attacks.base import Base
 
 
-
 # from torch.utils.data import Dataset
 class TextBase(Base, MapDataPipe):
     def __init__(self, dataset, args, mode, pop) -> None:
@@ -55,5 +54,3 @@ class TextBase(Base, MapDataPipe):
             is_poison = 0
             pre_label = label
             return text, label, is_poison, pre_label
-
-

@@ -1,4 +1,4 @@
-'''
+"""
 Untargeted backdoor watermark: Towards harmless and stealthy dataset copyright protection
 this script if for ubw attack
 github link: https://github.com/THUYimingLi/Untargeted_Backdoor_Watermark
@@ -13,7 +13,8 @@ github link: https://github.com/THUYimingLi/Untargeted_Backdoor_Watermark
 }
 
 The original license is placed at the end of this file.
-'''
+"""
+
 from attacks.image.image_base import ImageBase
 import torch
 from .image_base import *
@@ -87,7 +88,9 @@ class Ubw(ImageBase):
         is_poison = 1
         y_original = y
         return (x_poison, y_poison, is_poison, y_original)
-'''
+
+
+"""
        Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
@@ -289,4 +292,4 @@ class Ubw(ImageBase):
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-'''
+"""

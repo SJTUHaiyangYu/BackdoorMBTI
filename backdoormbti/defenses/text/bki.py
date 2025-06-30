@@ -46,7 +46,9 @@ class Bki(InputFilteringBase):
         return: a processed data list, containing poison filtering data for training
         """
 
-        self.args.logger.info("Training a backdoored model to help filter poison samples")
+        self.args.logger.info(
+            "Training a backdoored model to help filter poison samples"
+        )
         poison_loader = DataLoader(
             dataset=poison_data,
             batch_size=self.args.batch_size,

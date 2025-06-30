@@ -1,4 +1,4 @@
-'''
+"""
 Data-free Backdoor Removal based on Channel Lipschitzness
 This file is for clp_base denfense:
 github link : https://github.com/rkteddy/channel-Lipschitzness-based-pruning.
@@ -9,7 +9,8 @@ github link : https://github.com/rkteddy/channel-Lipschitzness-based-pruning.
   journal={arXiv preprint arXiv:2208.03111},
   year={2022}
 }
-'''
+"""
+
 import copy
 import logging
 
@@ -43,7 +44,6 @@ def CLP_prune(net, u):
 
             params[name + ".weight"][index] = 0
             params[name + ".bias"][index] = 0
-
 
         # Convolutional layer should be followed by a BN layer by default
         elif isinstance(m, nn.Conv2d):

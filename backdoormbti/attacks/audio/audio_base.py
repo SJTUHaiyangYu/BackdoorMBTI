@@ -5,7 +5,6 @@ import torch
 from attacks.base import Base
 
 
-
 class AudioBase(Base):
     """
     Base class for attack:
@@ -63,6 +62,3 @@ class AudioBase(Base):
 
         subset = torch.utils.data.Subset(self.dataset, indices)
         self.dataest = subset
-
-
-

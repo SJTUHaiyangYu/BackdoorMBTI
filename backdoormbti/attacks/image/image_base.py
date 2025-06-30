@@ -7,7 +7,6 @@ from torch.utils.data import Dataset
 from attacks.base import Base
 
 
-
 class ImageBase(Base, Dataset):
     """
     Base class for attack:
@@ -72,4 +71,3 @@ class ImageBase(Base, Dataset):
             is_poison = 0
             y_original = y
             return (x, y, is_poison, y_original)
-

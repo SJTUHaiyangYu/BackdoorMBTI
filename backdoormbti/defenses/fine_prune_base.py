@@ -1,4 +1,4 @@
-'''
+"""
 Fine-Pruning: Defending Against Backdooring Attacks on Deep Neural Networks
 this file is the base of fine-prune
 
@@ -10,7 +10,8 @@ this file is the base of fine-prune
         year={2018},
         organization={Springer}
         }
-'''
+"""
+
 import logging
 import math
 
@@ -130,7 +131,7 @@ class FinePruneBase(DefenseBase):
             results = super().eval()
             acc, asr, ra = results
             logger.info(results)
-            
+
             prune_info = {
                 "num_pruned": num_pruned,
                 "all_filter_num": len(seq_sort),

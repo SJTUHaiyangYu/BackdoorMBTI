@@ -1,4 +1,4 @@
-'''
+"""
 A new backdoor attack in CNNs by training set corruption without label poisoning
 this script is for SIG attack
 
@@ -10,7 +10,8 @@ this script is for SIG attack
   year={2019},
   organization={IEEE}
 }
-'''
+"""
+
 import numpy as np
 import torch
 

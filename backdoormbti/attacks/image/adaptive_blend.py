@@ -1,4 +1,4 @@
-'''
+"""
 Revisiting the Assumption of Latent Separability for Backdoor Defenses
 this script is for adaptive_blend attack
 github link: https://github.com/Unispac/Circumventing-Backdoor-Defenses
@@ -9,7 +9,8 @@ github link: https://github.com/Unispac/Circumventing-Backdoor-Defenses
   booktitle={The eleventh international conference on learning representations},
   year={2023}
 }
-'''
+"""
+
 import torch
 import random
 from torchvision.transforms.functional import to_tensor
@@ -19,6 +20,7 @@ from tqdm import tqdm
 from utils.io import get_poison_ds_path_by_args
 from PIL import Image
 from torchvision import transforms
+
 
 def issquare(x):
     tmp = sqrt(x)

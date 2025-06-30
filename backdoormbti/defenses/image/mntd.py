@@ -146,6 +146,7 @@ class Mntd(DetectionBackdoorModelsBase):
         self.target_model = load_model(args=args)
         self.shadow_model = load_model(args=args)
         self.exist_path = None
+
     def test(self):
         AUCs = []
         test_info = None
@@ -161,10 +162,14 @@ class Mntd(DetectionBackdoorModelsBase):
             is_discrete=is_discrete,
             threshold="half",
         )
-        self.args.logger.info(f"Test AUC: {test_info[1]}",)
+        self.args.logger.info(
+            f"Test AUC: {test_info[1]}",
+        )
         AUCs.append(test_info[1])
         AUC_mean = sum(AUCs) / len(AUCs)
-        self.args.logger.info("Average detection AUC on meta classifier: %.4f" % (AUC_mean))
+        self.args.logger.info(
+            "Average detection AUC on meta classifier: %.4f" % (AUC_mean)
+        )
 
         torch.save(
             self.meta_model.state_dict(),
@@ -200,7 +205,9 @@ class Mntd(DetectionBackdoorModelsBase):
             # else:
             self.meta_model.inp.data = self.meta_model.inp.data
 
-            self.args.logger.info("Training Meta Classifier %d/%d" % (i + 1, self.args.repeat))
+            self.args.logger.info(
+                "Training Meta Classifier %d/%d" % (i + 1, self.args.repeat)
+            )
             if self.args.no_query_tuning:
                 self.args.logger.info("No query tuning.")
                 optimizer = torch.optim.Adam(
@@ -241,7 +248,9 @@ class Mntd(DetectionBackdoorModelsBase):
                             self.meta_model.state_dict(),
                             self.args.save_folder_name / model_name,
                         )
-            self.args.logger.info(f"\tEval AUC: {test_info[1] if test_info is not None else 'N/A'}")
+            self.args.logger.info(
+                f"\tEval AUC: {test_info[1] if test_info is not None else 'N/A'}"
+            )
             AUCs.append(test_info[1] if test_info is not None else 0.0)
         AUC_mean = sum(AUCs) / len(AUCs)
         self.args.logger.info(

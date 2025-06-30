@@ -1,6 +1,7 @@
-'''
+"""
 This class provides a structured approach to training supervised learning models for different data types.
-'''
+"""
+
 from tqdm import tqdm
 import torch
 from datetime import datetime
@@ -25,7 +26,7 @@ class SupervisedLearningTrain:
             lr=args.lr,
             weight_decay=args.weight_decay,
         )
-        self.criterion = torch.nn.CrossEntropyLoss()  
+        self.criterion = torch.nn.CrossEntropyLoss()
         if args.lr_scheduler is not None:
             self.lr_scheduler = get_lr_scheduler(
                 args.lr_scheduler, self.optimizer, args

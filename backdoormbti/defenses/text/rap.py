@@ -54,11 +54,15 @@ class Rap(InputFilteringBase):
                 np.mean(clean_prob), np.mean(poison_prob)
             )
         )
-        self.args.logger.info("clean asr {}, poison asr {}".format(clean_asr, poison_asr))
+        self.args.logger.info(
+            "clean asr {}, poison asr {}".format(clean_asr, poison_asr)
+        )
         # threshold_idx = int(len(clean_dev) * self.frr)
         # threshold = np.sort(clean_prob)[threshold_idx]
         threshold = np.nanpercentile(clean_prob, self.frr * 100)
-        self.args.logger.info("Constrain FRR to {}, threshold = {}".format(self.frr, threshold))
+        self.args.logger.info(
+            "Constrain FRR to {}, threshold = {}".format(self.frr, threshold)
+        )
         preds = np.zeros(len(poison_set))
         # poison_idx = np.where(poison_prob < threshold)
         # logger.info(poison_idx.shape)

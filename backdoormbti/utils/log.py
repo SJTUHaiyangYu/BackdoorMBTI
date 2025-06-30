@@ -16,7 +16,7 @@ def configure_logger(
     Args:
         name (str): The name of the logger.
         log_file (str, optional): The path to the log file. Defaults to "example.log".
-        log_level (Literal["debug", "info", "error", "warning", "critical"], optional): 
+        log_level (Literal["debug", "info", "error", "warning", "critical"], optional):
             The minimum severity level of messages to be logged. Defaults to "info".
 
     Returns:

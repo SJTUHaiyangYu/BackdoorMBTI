@@ -7,7 +7,7 @@ MODEL="resnet18"
 PRATIO=0.2
 NUM_WORKERS=4
 
-python ../scripts/atk_train.py --data_type $DATA_TYPE --dataset $DATASET --attack_name $ATTACK_NAME --model $MODEL --pratio $PRATIO --num_workers $NUM_WORKERS
+python ../scripts/atk_train.py --data_type $DATA_TYPE --dataset $DATASET --attack_name $ATTACK_NAME --model_name $MODEL --pratio $PRATIO --num_workers $NUM_WORKERS
 
 # 实验运行设备:Linux dell-PowerEdge-R750 6.5.0-28-generic #29~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Apr  4 14:39:20 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
 

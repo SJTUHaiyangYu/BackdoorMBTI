@@ -1,4 +1,4 @@
-'''
+"""
 Hidden killer: Invisible textual backdoor attacks with syntactic trigger
 this script is for synbkd attack
 this code is based on https://github.com/thunlp/OpenBackdoor
@@ -15,7 +15,8 @@ this code is based on https://github.com/thunlp/OpenBackdoor
 	booktitle={Proceedings of NeurIPS: Datasets and Benchmarks},
 	year={2022}
 }
-'''
+"""
+
 import os
 
 import OpenAttack as oa
