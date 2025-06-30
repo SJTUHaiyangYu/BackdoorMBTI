@@ -31,7 +31,7 @@ To install BackdoorMBTI, please follow these steps:
 
       pip install backdoormbti
 
-4. **Install from source** (optional):
+4. **Install from source** (Recommanded):
 
    Alternatively, if you prefer to install from source, follow these steps:
 
