@@ -10,7 +10,10 @@ The basic structure of this file is as follows:
 
 import argparse
 import json
+import random
 import sys
+import time
+from pathlib import Path
 
 import torch
 import yaml
@@ -18,6 +21,7 @@ import yaml
 sys.path.append("../")
 import logging
 
+from batch_train.random_params import benign_random_params
 from eval.sl_learning_eval import SupervisedLearningEval
 from train.sl_learning_train import SupervisedLearningTrain
 from utils.args import add_yaml_to_args, init_args
@@ -70,6 +74,8 @@ def atk_train(args):
     if args.train_benign:
         train_set_wrapper = DSW(clean_train_set)
         train_log_path = train_log_path / "benign"
+        if not train_log_path.exists():
+            train_log_path.mkdir()
     else:
         # have not make the poison data, make
         if not poison_ds_path.exists():
@@ -177,7 +183,9 @@ def atk_train(args):
     logger.info("start testing")
     Eval = SupervisedLearningEval(
         clean_testloader=clean_test_loader,
-        poison_testloader=poison_test_loader,
+        poison_testloader=(
+            clean_test_loader if args.train_benign else poison_test_loader
+        ),
         args=args,
     )
     results = Eval.eval_model()
@@ -188,10 +196,18 @@ def atk_train(args):
     results_path = train_log_path / "attack_result.json"
 
     attack_result = {"acc,asr,ra": (acc, asr, ra)}
+    save_folder_path = Path("../data")
+    folder_name = f"""{args.data_type}-{args.dataset}-{"benign" if args.train_benign else args.attack_name}-{args.model_name}"""
+    save_folder_path = save_folder_path / folder_name
+    if not save_folder_path.exists():
+        save_folder_path.mkdir()
     if args.save_attacked_model:
-        torch.save(args.model.state_dict(), train_log_path / "attacked_model.pt")
-    with open(results_path, "w") as f:
-        json.dump(attack_result, f, indent=4)
+        torch.save(args.model.state_dict(), save_folder_path / f"{args.i}.pth")
+    with open(save_folder_path / "result.log", "a") as f:
+        new_line = f"第{args.i}个模型的训练结果为：acc:{acc} && asr:{asr} && ra:{ra}\n"
+        f.write(new_line)
+    with open(save_folder_path / "params.log", "a") as f:
+        pass
     logger.info("attack_result.json save in: {path}".format(path=results_path))
 
 
@@ -200,7 +216,24 @@ if __name__ == "__main__":
     init_folders()
     parser = argparse.ArgumentParser()
     init_args(parser)
+    parser.add_argument(
+        "--batch_number",
+        type=int,
+        default=100,
+        help="the number you want to batch generate",
+    )
+    parser.add_argument(
+        "--i",
+        type=int,
+        help="the index of the batch training models",
+    )
     args = parser.parse_args()
     conf_path = get_cfg_path_by_args(args, "attacks")
     add_yaml_to_args(args, conf_path)
-    atk_train(args)
+    for i in range(100):
+        args.i = i
+        if args.train_benign:
+            benign_random_params(args)
+        elif args.attack_name == "badnet":
+            pass
+        atk_train(args)
