@@ -2,6 +2,9 @@
 
 This is an official implentation of the paper [BackdoorMBTI: A Backdoor Learning Multimodal Benchmark Tool Kit for Backdoor Defense Evaluation](https://arxiv.org/pdf/2411.11006). This paper has been accepted by KDD 2025 ADS track. MBTI is an open source project expanding the unimodal backdoor learning to a multimodal context, designed to easily accommodate **new and realistic scenarios and tasks**.
 
+The framework:
+![framework](./backdoormbti/resources/arch.png)
+
 ## Usage
 
 see our documents: https://backdoormbti.readthedocs.io/
@@ -18,13 +21,20 @@ If our work is userful for your research, please cite our paper as follows:
 ```
 @inproceedings{yu2025backdoormbti,
   title={BackdoorMBTI: A Backdoor Learning Multimodal Benchmark Tool Kit for Backdoor Defense Evaluation},
-  author={Yu, Haiyang and Xie, Tian and Gui, Jiaping and Wang, Pengyang and Yi, Ping and Wu, Yue},
-  booktitle={Proceedings of the 31th ACM SIGKDD Conference on Knowledge Discovery and Data Mining},
+  author={Yu, Haiyang and Xie, Tian and Gui, Jiaping and Wang, Pengyang and Cheng, Pengzhou and Yi, Ping and Wu, Yue},
+  booktitle={Proceedings of the 31st ACM SIGKDD Conference on Knowledge Discovery and Data Mining V. 1},
+  pages={2791--2802},
   year={2025}
 }
+```
 
 
 ## Updates 
+
+### 2025-08-17
+
+1. Update the batch_train scripts.
+2. Fix bug in `README.md`, update the citation.
 
 ### 2025-06-30
 
@@ -68,5 +78,3 @@ We have a clear roadmap for the next phases of BackdoorMBTI development, includi
 4. fix bug currently found (low accuracy of video training).
 5. adding tasks and modalities we promised (VQA and audiovisual).
 
-The framework:
-![framework](./backdoormbti/resources/arch.png)

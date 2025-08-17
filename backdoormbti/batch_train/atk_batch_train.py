@@ -206,8 +206,6 @@ def atk_train(args):
     with open(save_folder_path / "result.log", "a") as f:
         new_line = f"第{args.i}个模型的训练结果为：acc:{acc} && asr:{asr} && ra:{ra}\n"
         f.write(new_line)
-    with open(save_folder_path / "params.log", "a") as f:
-        pass
     logger.info("attack_result.json save in: {path}".format(path=results_path))
 
 
