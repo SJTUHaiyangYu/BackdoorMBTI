@@ -31,6 +31,13 @@ If our work is userful for your research, please cite our paper as follows:
 
 ## Updates 
 
+### 2026-03-12
+1. Update the poison generation script in `resources/bite`.
+2. Add `REAMD.md` file for bite data preparation.
+3. Fix bug in preprocessing for model LSTM.
+4. Add multi-GPU serial training bash in `backdoormbti/batch_train`.
+5. Fix bug in `atk_batch_train.py`.
+
 ### 2025-08-17
 
 1. Update the batch_train scripts.
