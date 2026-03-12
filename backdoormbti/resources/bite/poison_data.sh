@@ -1,9 +1,21 @@
 pwd   # show current path
-cd  ../resources/bite
+# cd  ../resources/bite
 dataset=$1
 # flag=$2
 pratio=$2
-model=$3
+model=${3:-bert-base-uncased}
+
+case "$model" in
+	bert)
+		model="bert-base-uncased"
+		;;
+	roberta)
+		model="roberta-base"
+		;;
+	distilroberta)
+		model="distilroberta-base"
+		;;
+esac
 
 image_resolution=1
 HF_ENDPOINT=https://hf-mirror.com python build_clean_data.py --dataset ${dataset} #prepare clean data

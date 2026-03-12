@@ -88,7 +88,7 @@ class Base(ABC):
                 break
             data = self.dataset[idx]
 
-            if self.args.attack_name == "ssba" or self.args.attack_name == "refool":
+            if self.args.attack_name in ["ssba", "refool", "bite"]:
                 poison_data = self.make_poison_data(data, idx)
             else:
                 poison_data = self.make_poison_data(data)

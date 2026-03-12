@@ -37,6 +37,10 @@ from utils.model import load_model, load_poisoned_model
 from utils.wrapper import get_attack_by_args, get_data_spec_class_by_args
 
 
+def _use_fast_host_to_device_path(args):
+    return torch.cuda.is_available() and str(args.device).startswith("cuda")
+
+
 def atk_train(args):
     """this is the entry of the attack process
 
@@ -117,7 +121,8 @@ def atk_train(args):
         num_workers=args.num_workers,
         collate_fn=collate_fn,
         shuffle=True,
-        # pin_memory=True,
+        pin_memory=_use_fast_host_to_device_path(args),
+        persistent_workers=args.num_workers > 0,
     )
     # save args
     final_args_path = train_log_path / "train_args.yaml"
@@ -144,7 +149,8 @@ def atk_train(args):
         num_workers=args.num_workers,
         collate_fn=collate_fn,
         shuffle=False,
-        pin_memory=True,
+        pin_memory=_use_fast_host_to_device_path(args),
+        persistent_workers=args.num_workers > 0,
     )
     test_loader_lst.append(clean_test_loader)
     if not args.train_benign:
@@ -174,7 +180,8 @@ def atk_train(args):
             num_workers=args.num_workers,
             collate_fn=collate_fn,
             shuffle=False,
-            pin_memory=True,
+            pin_memory=_use_fast_host_to_device_path(args),
+            persistent_workers=args.num_workers > 0,
         )
         test_loader_lst.append(poison_test_loader)
     logger.info("test data loaded")

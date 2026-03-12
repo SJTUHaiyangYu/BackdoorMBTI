@@ -245,8 +245,9 @@ def calc_ops(
     sim_ref,
 ):
     all_prompt_lst = []
+    mask_token = mask_filler.tokenizer.mask_token
     for idx, op_collection in enumerate(collection_lst):
-        op_collection.prepare_prompts()
+        op_collection.prepare_prompts(mask_token=mask_token)
         for prompt_dict in op_collection.prompt_lst:
             all_prompt_lst.append(prompt_dict["prompt"])
 

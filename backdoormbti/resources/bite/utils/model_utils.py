@@ -40,18 +40,27 @@ class MaskFiller:
         self.top_k = top_k
 
     def __call__(self, inputs):
+        normalized_inputs = [
+            text.replace("<mask>", self.tokenizer.mask_token) for text in inputs
+        ]
         results = []
-        model_inputs = self.tokenizer(inputs, return_tensors="pt", padding=True)
+        model_inputs = self.tokenizer(
+            normalized_inputs, return_tensors="pt", padding=True
+        )
         model_inputs.to("cuda")
         with torch.no_grad():
             model_outputs = self.model(**model_inputs)
-        for input_ids, outputs in zip(
-            model_inputs["input_ids"], model_outputs["logits"]
+        for raw_input, input_ids, outputs in zip(
+            normalized_inputs, model_inputs["input_ids"], model_outputs["logits"]
         ):
             masked_index = torch.nonzero(
                 input_ids == self.tokenizer.mask_token_id, as_tuple=False
             )
-            assert torch.numel(masked_index) == 1
+            if masked_index.shape[0] != 1:
+                raise ValueError(
+                    f"Expected exactly one mask token `{self.tokenizer.mask_token}` in prompt, "
+                    f"but found {masked_index.shape[0]}: {raw_input}"
+                )
             logits = outputs[masked_index.item()]
             probs = logits.softmax(dim=0)
             values, predictions = probs.topk(self.top_k)

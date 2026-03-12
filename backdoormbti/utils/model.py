@@ -28,6 +28,8 @@ def load_poisoned_model(args):
 def load_model(args, **kwargs):
     import logging
 
+    args.audio_preprocess_on_device = False
+
     match args.model_name:
         # mnist model
         case "simple":
@@ -188,6 +190,7 @@ def load_model(args, **kwargs):
             from models.custom import AudioLSTM
 
             args.pre_trans = audio_pre_trans
+            args.audio_preprocess_on_device = True
             model = AudioLSTM(
                 input_size=128,
                 hidden_size=128,
@@ -198,6 +201,7 @@ def load_model(args, **kwargs):
             from models.custom import TDNN, X_Vector
 
             args.pre_trans = audio_pre_trans
+            args.audio_preprocess_on_device = True
             model = X_Vector(input_dim=128, num_classes=args.num_classes)
             # model = TDNN(input_dim=128, output_dim=args.num_classes)
         case "vggvox":

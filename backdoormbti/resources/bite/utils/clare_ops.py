@@ -19,7 +19,7 @@ class OpCollection:  # keep track of all operations for an instance
         self.original_text = " ".join(token_lst)
         self.current_text = " ".join(token_lst)
 
-    def prepare_prompts(self):
+    def prepare_prompts(self, mask_token="<mask>"):
         # prompt_lst will always be empty when no update is needed. op_lst can cache ops
         if self.need_update:
             allow_replace = self.op_counter["replace"] < self.op_thresh["replace"]
@@ -36,7 +36,9 @@ class OpCollection:  # keep track of all operations for an instance
                     self.prompt_lst.append(
                         {
                             "type": "replace",
-                            "prompt": self.generate_mask_prompt("replace", pivot_idx),
+                            "prompt": self.generate_mask_prompt(
+                                "replace", pivot_idx, mask_token
+                            ),
                             "orig_token": self.token_lst[pivot_idx],
                             "pivot_idx": pivot_idx,
                         }
@@ -53,17 +55,19 @@ class OpCollection:  # keep track of all operations for an instance
                     self.prompt_lst.append(
                         {
                             "type": "insert",
-                            "prompt": self.generate_mask_prompt("insert", pivot_idx),
+                            "prompt": self.generate_mask_prompt(
+                                "insert", pivot_idx, mask_token
+                            ),
                             "pivot_idx": pivot_idx,
                         }
                     )
 
-    def generate_mask_prompt(self, op_name, pivot_idx):
+    def generate_mask_prompt(self, op_name, pivot_idx, mask_token="<mask>"):
         mask_token_lst = self.token_lst.copy()
         if op_name == "replace":
-            mask_token_lst[pivot_idx] = "<mask>"
+            mask_token_lst[pivot_idx] = mask_token
         elif op_name == "insert":
-            mask_token_lst.insert(pivot_idx + 1, "<mask>")
+            mask_token_lst.insert(pivot_idx + 1, mask_token)
         else:
             raise ValueError()
         return " ".join(mask_token_lst)

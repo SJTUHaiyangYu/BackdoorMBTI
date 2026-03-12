@@ -24,6 +24,24 @@ class SupervisedLearningEval:
         self.poison_testloader = poison_testloader
         self.device = args.device
         self.data_type = args.data_type
+        self.non_blocking = torch.cuda.is_available() and str(self.device).startswith(
+            "cuda"
+        )
+
+    def _move_to_device(self, value):
+        if isinstance(value, torch.Tensor):
+            return value.to(self.device, non_blocking=self.non_blocking)
+        if hasattr(value, "to"):
+            return value.to(self.device)
+        if isinstance(value, dict):
+            return {key: self._move_to_device(item) for key, item in value.items()}
+        return value
+
+    def _prepare_audio_inputs(self, inputs):
+        inputs = self._move_to_device(inputs)
+        if getattr(self.args, "audio_preprocess_on_device", False):
+            inputs = self.args.pre_trans(inputs)
+        return inputs
 
     def _test_model_for_image(self, testloader, calculate_ra=False):
         """
@@ -44,7 +62,8 @@ class SupervisedLearningEval:
                     inputs, labels, *_ = data
                 else:
                     inputs, *_, labels = data
-                inputs, labels = inputs.to(self.device), labels.to(self.device)
+                inputs = self._move_to_device(inputs)
+                labels = self._move_to_device(labels)
                 outputs = self.model(inputs)
                 _, predicted = torch.max(outputs.data, 1)
                 total += labels.size(0)
@@ -73,7 +92,8 @@ class SupervisedLearningEval:
                 inputs = self.args.tokenizer(
                     inputs, padding=True, truncation=True, return_tensors="pt"
                 )
-                inputs, labels = inputs.to(self.device), labels.to(self.device)
+                inputs = self._move_to_device(inputs)
+                labels = self._move_to_device(labels)
                 outputs = self.model(**inputs)
                 predicted = torch.argmax(outputs.logits, dim=1)
                 total += labels.size(0)
@@ -99,7 +119,8 @@ class SupervisedLearningEval:
                     inputs, labels, *_ = data
                 else:
                     inputs, *_, labels = data
-                inputs, labels = inputs.to(self.device), labels.to(self.device)
+                inputs = self._prepare_audio_inputs(inputs)
+                labels = self._move_to_device(labels)
                 outputs = self.model(inputs)
                 outputs = outputs.squeeze()
                 predicted = outputs.argmax(1)
@@ -126,7 +147,8 @@ class SupervisedLearningEval:
                     inputs, labels, *_ = data
                 else:
                     inputs, *_, labels = data
-                inputs, labels = inputs.to(self.device), labels.to(self.device)
+                inputs = self._move_to_device(inputs)
+                labels = self._move_to_device(labels)
                 outputs = self.model(inputs)
                 _, predicted = torch.max(outputs.data, 1)
                 total += labels.size(0)

@@ -3,10 +3,10 @@ Reflection Backdoor: A Natural Backdoor Attack on Deep Neural Networks
 git link: https://github.com/DreamtaleCore/Refool
 
 @inproceedings{Liu2020Refool,
-	title={Reflection Backdoor: A Natural Backdoor Attack on Deep Neural Networks},
-	author={Yunfei Liu, Xingjun Ma, James Bailey, and Feng Lu},
-	booktitle={ECCV},
-	year={2020}
+        title={Reflection Backdoor: A Natural Backdoor Attack on Deep Neural Networks},
+        author={Yunfei Liu, Xingjun Ma, James Bailey, and Feng Lu},
+        booktitle={ECCV},
+        year={2020}
 }
 
 LICENSE is at the end of this file

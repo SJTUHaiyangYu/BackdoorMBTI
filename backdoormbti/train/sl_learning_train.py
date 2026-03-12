@@ -2,10 +2,16 @@
 This class provides a structured approach to training supervised learning models for different data types.
 """
 
-from tqdm import tqdm
-import torch
 from datetime import datetime
+
+import torch
+from tqdm import tqdm
+
 from utils.optim import get_lr_scheduler, get_optimizer
+
+
+def _non_blocking_device_transfer(device):
+    return torch.cuda.is_available() and str(device).startswith("cuda")
 
 
 class SupervisedLearningTrain:
@@ -34,6 +40,22 @@ class SupervisedLearningTrain:
         self.device = args.device
         self.epochs = args.epochs
         self.data_type = args.data_type
+        self.non_blocking = _non_blocking_device_transfer(self.device)
+
+    def _move_to_device(self, value):
+        if isinstance(value, torch.Tensor):
+            return value.to(self.device, non_blocking=self.non_blocking)
+        if hasattr(value, "to"):
+            return value.to(self.device)
+        if isinstance(value, dict):
+            return {key: self._move_to_device(item) for key, item in value.items()}
+        return value
+
+    def _prepare_audio_inputs(self, inputs):
+        inputs = self._move_to_device(inputs)
+        if getattr(self.args, "audio_preprocess_on_device", False):
+            inputs = self.args.pre_trans(inputs)
+        return inputs
 
     def _train_model_for_image(self):
         """
@@ -52,7 +74,8 @@ class SupervisedLearningTrain:
                 )
             ):
                 inputs, labels, *_ = data
-                inputs, labels = inputs.to(self.device), labels.to(self.device)
+                inputs = self._move_to_device(inputs)
+                labels = self._move_to_device(labels)
                 self.optimizer.zero_grad()
                 outputs = self.model(inputs)
                 loss = self.criterion(outputs, labels)
@@ -90,12 +113,12 @@ class SupervisedLearningTrain:
                     text, padding=True, truncation=True, return_tensors="pt"
                 )
                 inputs["labels"] = labels
-                inputs = inputs.to(self.device)
+                inputs = self._move_to_device(inputs)
                 self.optimizer.zero_grad()  # 每次迭代前清除梯度
                 outputs = self.model(**inputs)  # 前向传播
                 loss = outputs.loss  # 获取损失值
-                loss.backward()  # 反向传播计算梯度
-                self.optimizer.step()  # 更新模型参数
+                loss.backward()
+                self.optimizer.step()
                 running_loss += loss.item()
                 avg_loss = running_loss / (i + 1)
             end_time = datetime.now()
@@ -124,7 +147,8 @@ class SupervisedLearningTrain:
             ):
 
                 inputs, labels, *_ = data
-                inputs, labels = inputs.to(self.device), labels.to(self.device)
+                inputs = self._prepare_audio_inputs(inputs)
+                labels = self._move_to_device(labels)
                 self.optimizer.zero_grad()
                 outputs = self.model(inputs)
                 outputs = outputs.squeeze()
@@ -159,7 +183,8 @@ class SupervisedLearningTrain:
             ):
 
                 inputs, labels, *_ = data
-                inputs, labels = inputs.to(self.device), labels.to(self.device)
+                inputs = self._move_to_device(inputs)
+                labels = self._move_to_device(labels)
                 self.optimizer.zero_grad()
                 outputs = self.model(inputs)
                 loss = self.criterion(outputs, labels)

@@ -17,6 +17,7 @@ resources/hmdb51
 resources/ssba/package
 resources/ssba/poison_data
 resources/stylebkd/bible/pytorch_model.bin
+backdoormbti/resources/bite/sst2
 scripts/*.slurm
 scripts/tasks
 scripts/train.sh

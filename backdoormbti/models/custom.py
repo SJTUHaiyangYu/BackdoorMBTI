@@ -67,6 +67,7 @@ class AudioLSTM(nn.Module):
         self.fc = nn.Linear(hidden_size, num_classes)
 
     def forward(self, x):
+        self.lstm.flatten_parameters()
         out, _ = self.lstm(x)
         out = self.fc(out[:, -1, :])  # 取最后一个时间步的输出
         return out

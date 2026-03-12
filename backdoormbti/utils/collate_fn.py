@@ -4,8 +4,28 @@ Collate Functions for DataLoader
 This module provides functions to collate batches of data for various types of datasets, including video, audio, and their corresponding transformations.
 """
 
-import librosa
 import torch
+import torchaudio
+
+
+_MEL_SPECTROGRAM_CACHE = {}
+
+
+def _get_mel_spectrogram_transform(device, dtype, sample_rate=16000, n_mels=128):
+    cache_key = (device.type, device.index, str(dtype), sample_rate, n_mels)
+    transform = _MEL_SPECTROGRAM_CACHE.get(cache_key)
+    if transform is None:
+        transform = torchaudio.transforms.MelSpectrogram(
+            sample_rate=sample_rate,
+            n_fft=2048,
+            win_length=2048,
+            hop_length=512,
+            n_mels=n_mels,
+            center=True,
+            power=2.0,
+        ).to(device=device, dtype=dtype)
+        _MEL_SPECTROGRAM_CACHE[cache_key] = transform
+    return transform
 
 
 def video_collate_fn(batch):
@@ -46,15 +66,13 @@ def audio_pre_trans(waveform):
     Returns:
         torch.Tensor: The mel-spectrogram tensor.
     """
-    # can be optimized, move this to collate_fn in dataloader
-    device = waveform.device
-    mel_spectrogram = librosa.feature.melspectrogram(
-        y=waveform.squeeze().cpu().numpy(), sr=16000, n_mels=128
+    if waveform.dim() == 3 and waveform.size(1) == 1:
+        waveform = waveform.squeeze(1)
+    transform = _get_mel_spectrogram_transform(
+        waveform.device, waveform.dtype, sample_rate=16000, n_mels=128
     )
-    tensor = torch.from_numpy(mel_spectrogram).permute(0, 2, 1)
-    tensor = tensor.to(device)
-
-    return tensor
+    mel_spectrogram = transform(waveform)
+    return mel_spectrogram.transpose(-1, -2).contiguous()
 
 
 class AudioCollator(object):
@@ -71,7 +89,20 @@ class AudioCollator(object):
 
     def __init__(self, args) -> None:
         self.args = args
-        self.transform = args.pre_trans
+
+    def _get_label_to_index_map(self):
+        classes = getattr(self.args, "classes", None)
+        if classes is None:
+            raise AttributeError("args.classes is not initialized for AudioCollator")
+
+        cached_classes = getattr(self, "_cached_classes", None)
+        cached_map = getattr(self, "label_to_index_map", None)
+        if cached_map is None or cached_classes != tuple(classes):
+            self._cached_classes = tuple(classes)
+            self.label_to_index_map = {
+                label: idx for idx, label in enumerate(self._cached_classes)
+            }
+        return self.label_to_index_map
 
     def __call__(self, batch):
         """
@@ -90,16 +121,19 @@ class AudioCollator(object):
         is_poison_lst, pre_targets = [], []
 
         # Gather in lists, and encode labels as indices
+        label_to_index_map = self._get_label_to_index_map()
+
         for waveform, _, target, is_poison, pre_target in batch:
             tensors += [waveform]
-            targets += [label_to_index(target, self.args.classes)]
+            targets += [torch.tensor(label_to_index_map[target])]
             is_poison_lst += [torch.IntTensor([is_poison])]
-            pre_targets += [label_to_index(pre_target, self.args.classes)]
+            pre_targets += [torch.tensor(label_to_index_map[pre_target])]
 
         # Group the list of tensors into a batched tensor
         tensors = pad_sequence(tensors)
-        if self.transform:
-            tensors = self.transform(tensors)
+        transform = self.args.pre_trans
+        if transform and not getattr(self.args, "audio_preprocess_on_device", False):
+            tensors = transform(tensors)
         targets = torch.stack(targets)
         is_poison_lst = torch.stack(is_poison_lst).squeeze(1)
         pre_targets = torch.stack(pre_targets)
