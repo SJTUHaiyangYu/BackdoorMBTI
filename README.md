@@ -31,6 +31,9 @@ If our work is userful for your research, please cite our paper as follows:
 
 ## Updates 
 
+### 2026-03-18
+1. Add resume function for batch_train script.
+
 ### 2026-03-12
 1. Update the poison generation script in `resources/bite`.
 2. Add `REAMD.md` file for bite data preparation.

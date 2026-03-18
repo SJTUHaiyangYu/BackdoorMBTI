@@ -41,6 +41,36 @@ def _use_fast_host_to_device_path(args):
     return torch.cuda.is_available() and str(args.device).startswith("cuda")
 
 
+def _get_save_folder_path(args):
+    save_folder_path = Path("../data")
+    folder_name = f"""{args.data_type}-{args.dataset}-{"benign" if args.train_benign else args.attack_name}-{args.model_name}"""
+    return save_folder_path / folder_name
+
+
+def _has_trained_model(args, model_index):
+    """Check whether a specific model index has already been trained and saved."""
+    save_folder_path = _get_save_folder_path(args)
+    if not save_folder_path.exists():
+        return False
+
+    # Priority 1: checkpoint file exists (0.pth, 1.pth, ...)
+    if (save_folder_path / f"{model_index}.pth").exists():
+        return True
+
+    # Priority 2: result log already has this index
+    result_log_path = save_folder_path / "result.log"
+    if result_log_path.exists():
+        try:
+            with open(result_log_path, "r", encoding="utf-8") as f:
+                content = f.read()
+            if f"第{model_index}个模型" in content:
+                return True
+        except OSError:
+            return False
+
+    return False
+
+
 def atk_train(args):
     """this is the entry of the attack process
 
@@ -203,9 +233,7 @@ def atk_train(args):
     results_path = train_log_path / "attack_result.json"
 
     attack_result = {"acc,asr,ra": (acc, asr, ra)}
-    save_folder_path = Path("../data")
-    folder_name = f"""{args.data_type}-{args.dataset}-{"benign" if args.train_benign else args.attack_name}-{args.model_name}"""
-    save_folder_path = save_folder_path / folder_name
+    save_folder_path = _get_save_folder_path(args)
     if not save_folder_path.exists():
         save_folder_path.mkdir()
     if args.save_attacked_model:
@@ -235,8 +263,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
     conf_path = get_cfg_path_by_args(args, "attacks")
     add_yaml_to_args(args, conf_path)
-    for i in range(100):
+    for i in range(args.batch_number):
         args.i = i
+        # Resume support: skip already trained indices and continue with remaining ones.
+        if _has_trained_model(args, i):
+            print(f"[resume] Skip i={i}, found existing checkpoint/result.")
+            continue
         if args.train_benign:
             benign_random_params(args)
         elif args.attack_name == "badnet":
